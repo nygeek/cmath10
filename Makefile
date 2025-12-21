@@ -39,6 +39,7 @@ FILES = \
 	.gitattributes \
 	.gitignore \
 	pyvenv.cfg \
+	cmath10.py \
 	trace_debug.py \
 	README.md
 
