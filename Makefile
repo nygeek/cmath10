@@ -36,6 +36,7 @@ PWD := $(shell pwd)
 
 FILES = \
 	Makefile \
+	.gitattributes \
 	.gitignore \
 	pyvenv.cfg \
 	trace_debug.py \
