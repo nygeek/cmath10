@@ -74,7 +74,8 @@ clean:
 diff: .gitattributes
 	git diff
 
-status: ${FORCE}
+.PHONY: status
+status:
 	git status
 
 # this brings the remote copy into sync with the local one
