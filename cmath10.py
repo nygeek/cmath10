@@ -196,11 +196,17 @@ class CMath10:
     #   [2025-12-21] log
     #   [2025-12-21] sqrt
     #   [2025-12-21] acos
+    #       Scalar done 2025-12-22
     #   [2025-12-21] asin
+    #       Scalar done 2025-12-22
     #   [2025-12-21] atan
+    #       Scalar done 2025-12-22
     #   [2025-12-21] cos
+    #       Scalar done 2025-12-22
     #   [2025-12-21] sin
+    #       Scalar done 2025-12-22
     #   [2025-12-21] tan
+    #       Scalar done 2025-12-22
     #   [2025-12-21] acosh
     #   [2025-12-21] asinh
     #   [2025-12-21] atanh
@@ -208,9 +214,9 @@ class CMath10:
     #   [2025-12-21] sinh
     #   [2025-12-21] tanh
     #   [2025-12-21] pi
-    #       Done 2025-12-22
+    #       Scalar done 2025-12-22
     #   [2025-12-21] e 
-    #       Done 2025-12-22
+    #       Scalar done 2025-12-22
     #   [2025-12-21] add 
     #       Done 2025-12-21
     #   [2025-12-21] sub 
@@ -228,12 +234,14 @@ class CMath10:
         self.precision = precision
         getcontext().prec = precision
 
+
     def __str__(self):
         """ return a string representation of the number """
         if (self.imag >= 0):
             return "(" + str(self.real) + "+" + str(self.imag) + "j)"
         else:
             return "(" + str(self.real) + str(self.imag) + "j)"
+
 
 # ----- Basic arithmetic ----- #
 
