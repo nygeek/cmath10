@@ -14,7 +14,7 @@ help:
 	@ echo "ENSCRIPT:" ${ENSCRIPT}
 	@ echo "PS2PDF:" ${PS2PDF}
 	@ echo "BASH:" ${BASH}
-	@ echo "PYHTHON:" ${PYHTHON}
+	@ echo "PYTHON:" ${PYTHON}
 	@ echo "run source bin/activate"
 
 # Make us OS-independent ... at least for MacOS and Linux
@@ -34,14 +34,24 @@ PYTHON := $(shell which python3)
 HOME := $(shell echo ${HOME})
 PWD := $(shell pwd)
 
+PYTHON_CODE = \
+	cmath10.py \
+	trace_debug.py
+
 FILES = \
+	${PYTHON_CODE} \
 	Makefile \
 	.gitattributes \
 	.gitignore \
 	pyvenv.cfg \
-	cmath10.py \
-	trace_debug.py \
 	README.md
+
+.PHONY: lint pylint
+lint:
+	pylint ${PYTHON_CODE}
+
+pyling:
+	pylint ${PYTHON_CODE}
 
 .PHONY: run
 test:

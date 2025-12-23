@@ -1,60 +1,23 @@
 """ Implementation of the Complex Decimal Math library for the cnc10
     calculator.
 
-Modeled on the cmath.py library distributed as part of Python,
-but using the decimal.py long decimal math machinery.
+    Modeled on the cmath.py library distributed as part of Python,
+    but using the decimal.py long decimal math machinery.
 
-Open question - should I split the scalar machinery out as a
-separate module?
+    OPEN QUESTION - should the scalar machinery be split out as a
+    separate module?
 
 Started 2025-12-21
 
 Copyright (C) 2025 NYGeek LLC
 
-    ToDo:
-    [2025-12-21] phase
-    [2025-12-21] polar
-    [2025-12-21] rect
-    [2025-12-21] exp
-        Complex done 2025-12-22
-    [2025-12-21] log
-    [2025-12-21] sqrt
-    [2025-12-21] acos
-        Scalar done 2025-12-22
-    [2025-12-21] asin
-        Scalar done 2025-12-22
-    [2025-12-21] atan
-        Scalar done 2025-12-22
-    [2025-12-21] cos
-        Scalar done 2025-12-22
-    [2025-12-21] sin
-        Scalar done 2025-12-22
-    [2025-12-21] tan
-        Scalar done 2025-12-22
-    [2025-12-21] acosh
-    [2025-12-21] asinh
-    [2025-12-21] atanh
-    [2025-12-21] cosh
-    [2025-12-21] sinh
-    [2025-12-21] tanh
-    [2025-12-21] pi
-        Scalar done 2025-12-22
-    [2025-12-21] e 
-        Scalar done 2025-12-22
-    [2025-12-21] add 
-        Done 2025-12-21
-    [2025-12-21] sub 
-        Done 2025-12-21
-    [2025-12-21] mul 
-        Done 2025-12-21
-    [2025-12-21] div 
-        Done 2025-12-21
+    ToDo list in README.md
 
-    """
-    
+"""
+
 # ----- Python libraries ----- #
 import json
-from decimal import *
+from decimal import Decimal, getcontext
 
 # ----- Local libraries ----- #
 from trace_debug import DebugTrace
@@ -62,12 +25,14 @@ from trace_debug import DebugTrace
 # ----- JSON Encoder for Decimal ----- #
 
 class DecimalEncoder(json.JSONEncoder):
-    def default(self, obj):
-        if isinstance(obj, Decimal):
-            return str(obj)
-        return super().default(obj)
+    """ Enable decimal.py objects to be JSON serialized. """
+    def default(self, o):
+        if isinstance(o, Decimal):
+            return str(o)
+        return super().default(o)
 
 def decimal_decoder(dct):
+    """ Convert to Decimal in JSON handler """
     for key, value in dct.items():
         if isinstance(value, str):
             try:
@@ -75,6 +40,7 @@ def decimal_decoder(dct):
             except:
                 pass
     return dct
+
 
 # ----- ----- Scalar functions ----- ----- #
 
@@ -191,8 +157,8 @@ def scalar_atan(x):
     """
     Compute arctan(x) using Taylor series.
     arctan(x) = x - x^3/3 + x^5/5 - x^7/7 + ...  for |x| <= 1
-    For |x| > 1, use arctan(x) = pi/2 - arctan(1/x) for x > 0
-                           or = -pi/2 - arctan(1/x) for x < 0
+    For |x| > 1, use scalar_atan(x) = pi/2 - scalar_atan(1/x) for x > 0
+                           or = -pi/2 - scalar_atan(1/x) for x < 0
     """
     getcontext().prec += 2
     x = Decimal(x)
@@ -204,8 +170,8 @@ def scalar_atan(x):
         getcontext().prec -= 2
         return +result
 
-    # For values close to 1, use arctan(x) = pi/4 + arctan((x-1)/(x+1))
-    # to improve convergence
+    # For values close to 1, use scalar_atan(x) =
+    #   pi/4 + scalar_atan((x-1)/(x+1)) to improve convergence
     if abs(x) > Decimal('0.5'):
         result = scalar_pi() / 4 + scalar_atan((x - 1) / (x + 1))
         getcontext().prec -= 2
@@ -243,13 +209,12 @@ class CMath10:
 
     def __str__(self):
         """ return a string representation of the number """
-        if (self.imag >= 0):
+        if self.imag >= 0:
             return "(" + str(self.real) + "+" + str(self.imag) + "j)"
-        else:
-            return "(" + str(self.real) + str(self.imag) + "j)"
+        return "(" + str(self.real) + str(self.imag) + "j)"
 
 
-# ----- Basic arithmetic ----- #
+# ----- Basic complex arithmetic ----- #
 
     def add(self, b):
         """ Implement self + b """
@@ -284,6 +249,8 @@ class CMath10:
         return self
 
 
+# ----- complex math ----- #
+
     def exp(self):
         """ exp(a+bi) = exp(a)*(cos(b)+isin(b)) """
         _mag = self.real.exp()
@@ -294,9 +261,18 @@ class CMath10:
         return self
 
 
+    def phase(self):
+        """ phase of z, aka arg z """
+        _ratio = self.imag / self.real
+        _real = scalar_atan(_ratio)
+        if _real * _ratio < 0:
+            _real = -real
+        return CMath10(_real, 0)
+
+
 def main():
     """ simple smoke test """
-    DEBUG = DebugTrace(False)
+    DebugTrace(False)
     z = CMath10("1", "2")
     print(f"Z: {z}")
     a = CMath10("1", "3")
@@ -338,6 +314,10 @@ def main():
     z = CMath10(0,scalar_pi())
     z = z.exp()
     print(f"e^(pi*i): {z}")
+    z = CMath10("1", "1")
+    print(f"phase(z: {z}): {z.phase()}")
+    z = CMath10("1", "-1")
+    print(f"phase(z: {z}): {z.phase()}")
 
 
 if __name__ == '__main__':
