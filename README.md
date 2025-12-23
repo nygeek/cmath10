@@ -76,17 +76,17 @@ ENTER +.
 1. [2025-12-21] log
 1. [2025-12-21] sqrt
 1. [2025-12-21] acos
-* Scalar done 2025-12-22
+    * Scalar done 2025-12-22
 1. [2025-12-21] asin
-* Scalar done 2025-12-22
+    * Scalar done 2025-12-22
 1. [2025-12-21] atan
-* Scalar done 2025-12-22
+    * Scalar done 2025-12-22
 1. [2025-12-21] cos
-* Scalar done 2025-12-22
+    * Scalar done 2025-12-22
 1. [2025-12-21] sin
-* Scalar done 2025-12-22
+    * Scalar done 2025-12-22
 1. [2025-12-21] tan
-* Scalar done 2025-12-22
+    * Scalar done 2025-12-22
 1. [2025-12-21] acosh
 1. [2025-12-21] asinh
 1. [2025-12-21] atanh
@@ -94,14 +94,14 @@ ENTER +.
 1. [2025-12-21] sinh
 1. [2025-12-21] tanh
 1. [2025-12-21] pi
-* Scalar done 2025-12-22
+    * Scalar done 2025-12-22
 1. [2025-12-21] e
-* Scalar done 2025-12-22
+    * Scalar done 2025-12-22
 1. [2025-12-21] add
-* Done 2025-12-21
+    * Done 2025-12-21
 1. [2025-12-21] sub
-* Done 2025-12-21
+    * Done 2025-12-21
 1. [2025-12-21] mul
-* Done 2025-12-21
+    * Done 2025-12-21
 1. [2025-12-21] div
-* Done 2025-12-21
+    * Done 2025-12-21
