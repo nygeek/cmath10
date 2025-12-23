@@ -17,7 +17,7 @@ Copyright (C) 2025 NYGeek LLC
 
 # ----- Python libraries ----- #
 import json
-from decimal import Decimal, getcontext
+from decimal import Decimal, getcontext, InvalidOperation
 
 # ----- Local libraries ----- #
 from trace_debug import DebugTrace
@@ -37,7 +37,7 @@ def decimal_decoder(dct):
         if isinstance(value, str):
             try:
                 dct[key] = Decimal(value)
-            except:
+            except (InvalidOperation, TypeError, ValueError):
                 pass
     return dct
 
