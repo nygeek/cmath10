@@ -174,7 +174,7 @@ def scalar_atan(x):
     #   pi/4 + scalar_atan((x-1)/(x+1)) to improve convergence
     if abs(x) > Decimal('0.5'):
         result = scalar_pi() / 4
-        if (x + 1) != 0:
+        if x + 1 != 0:
             result += scalar_atan((x - 1) / (x + 1))
         getcontext().prec -= 2
         return +result
