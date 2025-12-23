@@ -11,44 +11,44 @@ Started 2025-12-21
 
 Copyright (C) 2025 NYGeek LLC
 
-
     ToDo:
-      [2025-12-21] phase
-      [2025-12-21] polar
-      [2025-12-21] rect
-      [2025-12-21] exp
-      [2025-12-21] log
-      [2025-12-21] sqrt
-      [2025-12-21] acos
-          Scalar done 2025-12-22
-      [2025-12-21] asin
-          Scalar done 2025-12-22
-      [2025-12-21] atan
-          Scalar done 2025-12-22
-      [2025-12-21] cos
-          Scalar done 2025-12-22
-      [2025-12-21] sin
-          Scalar done 2025-12-22
-      [2025-12-21] tan
-          Scalar done 2025-12-22
-      [2025-12-21] acosh
-      [2025-12-21] asinh
-      [2025-12-21] atanh
-      [2025-12-21] cosh
-      [2025-12-21] sinh
-      [2025-12-21] tanh
-      [2025-12-21] pi
-          Scalar done 2025-12-22
-      [2025-12-21] e 
-          Scalar done 2025-12-22
-      [2025-12-21] add 
-          Done 2025-12-21
-      [2025-12-21] sub 
-          Done 2025-12-21
-      [2025-12-21] mul 
-          Done 2025-12-21
-      [2025-12-21] div 
-          Done 2025-12-21
+    [2025-12-21] phase
+    [2025-12-21] polar
+    [2025-12-21] rect
+    [2025-12-21] exp
+        Complex done 2025-12-22
+    [2025-12-21] log
+    [2025-12-21] sqrt
+    [2025-12-21] acos
+        Scalar done 2025-12-22
+    [2025-12-21] asin
+        Scalar done 2025-12-22
+    [2025-12-21] atan
+        Scalar done 2025-12-22
+    [2025-12-21] cos
+        Scalar done 2025-12-22
+    [2025-12-21] sin
+        Scalar done 2025-12-22
+    [2025-12-21] tan
+        Scalar done 2025-12-22
+    [2025-12-21] acosh
+    [2025-12-21] asinh
+    [2025-12-21] atanh
+    [2025-12-21] cosh
+    [2025-12-21] sinh
+    [2025-12-21] tanh
+    [2025-12-21] pi
+        Scalar done 2025-12-22
+    [2025-12-21] e 
+        Scalar done 2025-12-22
+    [2025-12-21] add 
+        Done 2025-12-21
+    [2025-12-21] sub 
+        Done 2025-12-21
+    [2025-12-21] mul 
+        Done 2025-12-21
+    [2025-12-21] div 
+        Done 2025-12-21
 
     """
     
