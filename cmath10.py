@@ -100,6 +100,7 @@ def scalar_e():
     """ return e """
     return Decimal('1').exp()
 
+
 # ----- scalar trigonometric functions ----- #
 
 def scalar_cos(x):
@@ -122,7 +123,8 @@ def scalar_cos(x):
 
 
 def scalar_sin(x):
-    """ from docs.python.org/3/library/decimal.html#recipes """
+    """ return sin """
+    # from docs.python.org/3/library/decimal.html#recipes
     getcontext().prec += 2
     _twopi = 2 * scalar_pi()
     if ((x > _twopi) or (x < -_twopi)):
