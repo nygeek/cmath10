@@ -4,12 +4,54 @@
 Modeled on the cmath.py library distributed as part of Python,
 but using the decimal.py long decimal math machinery.
 
+Open question - should I split the scalar machinery out as a
+separate module?
+
 Started 2025-12-21
 
 Copyright (C) 2025 NYGeek LLC
 
-"""
 
+    ToDo:
+      [2025-12-21] phase
+      [2025-12-21] polar
+      [2025-12-21] rect
+      [2025-12-21] exp
+      [2025-12-21] log
+      [2025-12-21] sqrt
+      [2025-12-21] acos
+          Scalar done 2025-12-22
+      [2025-12-21] asin
+          Scalar done 2025-12-22
+      [2025-12-21] atan
+          Scalar done 2025-12-22
+      [2025-12-21] cos
+          Scalar done 2025-12-22
+      [2025-12-21] sin
+          Scalar done 2025-12-22
+      [2025-12-21] tan
+          Scalar done 2025-12-22
+      [2025-12-21] acosh
+      [2025-12-21] asinh
+      [2025-12-21] atanh
+      [2025-12-21] cosh
+      [2025-12-21] sinh
+      [2025-12-21] tanh
+      [2025-12-21] pi
+          Scalar done 2025-12-22
+      [2025-12-21] e 
+          Scalar done 2025-12-22
+      [2025-12-21] add 
+          Done 2025-12-21
+      [2025-12-21] sub 
+          Done 2025-12-21
+      [2025-12-21] mul 
+          Done 2025-12-21
+      [2025-12-21] div 
+          Done 2025-12-21
+
+    """
+    
 # ----- Python libraries ----- #
 import json
 from decimal import *
@@ -188,44 +230,6 @@ def scalar_atan(x):
 class CMath10:
     """ Class to implement the Complex Decimal Math machinery. """
 
-    # ToDo:
-    #   [2025-12-21] phase
-    #   [2025-12-21] polar
-    #   [2025-12-21] rect
-    #   [2025-12-21] exp
-    #   [2025-12-21] log
-    #   [2025-12-21] sqrt
-    #   [2025-12-21] acos
-    #       Scalar done 2025-12-22
-    #   [2025-12-21] asin
-    #       Scalar done 2025-12-22
-    #   [2025-12-21] atan
-    #       Scalar done 2025-12-22
-    #   [2025-12-21] cos
-    #       Scalar done 2025-12-22
-    #   [2025-12-21] sin
-    #       Scalar done 2025-12-22
-    #   [2025-12-21] tan
-    #       Scalar done 2025-12-22
-    #   [2025-12-21] acosh
-    #   [2025-12-21] asinh
-    #   [2025-12-21] atanh
-    #   [2025-12-21] cosh
-    #   [2025-12-21] sinh
-    #   [2025-12-21] tanh
-    #   [2025-12-21] pi
-    #       Scalar done 2025-12-22
-    #   [2025-12-21] e 
-    #       Scalar done 2025-12-22
-    #   [2025-12-21] add 
-    #       Done 2025-12-21
-    #   [2025-12-21] sub 
-    #       Done 2025-12-21
-    #   [2025-12-21] mul 
-    #       Done 2025-12-21
-    #   [2025-12-21] div 
-    #       Done 2025-12-21
-
 
     def __init__(self, real, imag, precision=32):
         """ Initialize a complex decimal. """
@@ -278,6 +282,16 @@ class CMath10:
         return self
 
 
+    def exp(self):
+        """ exp(a+bi) = exp(a)*(cos(b)+isin(b)) """
+        _mag = self.real.exp()
+        _real = _mag * scalar_cos(self.imag)
+        _imag = _mag * scalar_sin(self.imag)
+        self.real = _real
+        self.imag = _imag
+        return self
+
+
 def main():
     """ simple smoke test """
     DEBUG = DebugTrace(False)
@@ -319,6 +333,9 @@ def main():
     print(f"pi/5: {x}")
     print(f"tan(pi/5): {scalar_tan(x)}")
     print(f"atan(tan(pi/5)): {scalar_atan(scalar_tan(x))}")
+    z = CMath10(0,scalar_pi())
+    z = z.exp()
+    print(f"e^(pi*i): {z}")
 
 
 if __name__ == '__main__':

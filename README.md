@@ -23,4 +23,47 @@ string representation of this number is (a+bj).
 Notice that we are seeking to make cmath10 behave as much like cmath
 as possible.
 
+## Author
 
+Written by Marc Donner (marc@nygeek.net)
+
+## Thanks
+
+I first started thinking about building a complex calculator based
+on the HP35 calculator when I graduated from college.  Recently I
+decided to implement it.
+
+Beyond the HP-35, I encountered George Stibitz late in his career.
+He had built a complex number calculator at Bell Labs, an accomplishment
+that was particularly remarkable given that the whole thing was
+implemented in electromechanical relays.
+
+Finally, special thanks go to Mike Cowlishaw whose work on arbitrary
+resolution decimal arithmetic underpins the decimal.py module and
+enables this machinery to ultimately emulate the HP35 more
+realistically.
+
+There are two particular tests that I want this machinery to support:
+
+1 - Euler's Identity (e^pi*i + 1 = 0)
+
+2 - The HP35 game - minimum number of keys to display the number
+200 on the display without pressing any digit keys and starting
+from a cleared stack.  The best I know is six - ARC COS TAN LOG
+ENTER +.
+
+## CHANGELOG
+
+## NEWS
+
+## Install
+
+## Copying, License
+
+## Bugs
+
+## Contributing
+
+## FAQ
+
+## TODO
