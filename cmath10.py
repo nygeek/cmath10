@@ -173,7 +173,9 @@ def scalar_atan(x):
     # For values close to 1, use scalar_atan(x) =
     #   pi/4 + scalar_atan((x-1)/(x+1)) to improve convergence
     if abs(x) > Decimal('0.5'):
-        result = scalar_pi() / 4 + scalar_atan((x - 1) / (x + 1))
+        result = scalar_pi() / 4
+        if (x + 1) != 0:
+            result += scalar_atan((x - 1) / (x + 1))
         getcontext().prec -= 2
         return +result
 
@@ -265,9 +267,10 @@ class CMath10:
         """ phase of z, aka arg z """
         _ratio = self.imag / self.real
         _real = scalar_atan(_ratio)
-        if _real * _ratio < 0:
-            _real = -real
-        return CMath10(_real, 0)
+        _sign = 1
+        if self.imag < 0:
+            _sign = -1
+        return CMath10(_sign * _real, 0)
 
 
 def main():
