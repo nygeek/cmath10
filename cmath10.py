@@ -262,6 +262,11 @@ class CMath10:
 
 # ----- complex math ----- #
 
+    def abs(self):
+        """ aka mag """
+        return CMath10(self.scalar_abs(), 0)
+
+
     def exp(self):
         """ exp(a+bi) = exp(a)*(cos(b)+isin(b)) """
         _mag = self.real.exp()
@@ -272,28 +277,36 @@ class CMath10:
         return self
 
 
+    def log(self):
+        """ natural logarithm of z """
+        # note: in cmath log is natural log, log10 is decimal log
+        # note: in decimal.py ln is natural log
+        _real = self.scalar_abs().ln() # this calls decimal.py ln
+        _imag = scalar_atan2(self.imag, self.real)
+        return CMath10(_real, _imag)
+
+
     def phase(self):
         """ phase of z, aka arg z """
         return CMath10(scalar_atan2(self.real, self.imag), Decimal(0))
 
 
+    def sqrt(self):
+        """ square root of z """
+        # Principal square root.  There is another, of course
+        _r = self.scalar_abs()
+        _sign = 1
+        if self.imag < 0:
+            _sign = -1
+        return CMath10( ((_r + self.real)/2).sqrt(), 
+                       _sign * ((_r - self.real)/2).sqrt())
+
+
+# ----- scalar result on complex numbers ----- #
+
     def scalar_abs(self):
         """ aka mag """
         return (self.real * self.real + self.imag * self.imag).sqrt()
-
-
-    def abs(self):
-        """ aka mag """
-        return CMath10(self.scalar_abs(), 0)
-
-
-    def log(self):
-        """ natural logarithm of z """
-        # note: in cmath log is natural log, log10 is decimal log
-        # note: in decimal.py ln is natural log
-        _real = self.scalar_abs().ln() / 2 # this calls decimal.py ln
-        _imag = scalar_atan2(self.imag, self.real)
-        return CMath10(_real, _imag)
 
 
 def main():
@@ -348,7 +361,12 @@ def main():
     r = z.scalar_abs()
     print(f"scalar_abs(z: {z}): {r}")
     z = CMath10("3", "4")
-    print(f"log(z: {z}): {z.log()}")
+    z2 = z.log()
+    print(f"log(z: {z}): {z2}")
+    print(f"e^(log(z)): {z2.exp()}")
+    z = CMath10("2", "2")
+    z2 = z.sqrt()
+    print(f"sqrt(z: {z}): {z2}")
 
 
 if __name__ == '__main__':

@@ -76,7 +76,11 @@ ENTER +.
     * Scalar from decimal.py
     * Complex 2025-12-22
 1. [2025-12-21] log
+    * Scalar from decimal.py
+    * Complex 2025-12-24
 1. [2025-12-21] sqrt
+    * Scalar from decimal.py
+    * Complex 2025-12-24
 1. [2025-12-21] acos
     * Scalar 2025-12-22
 1. [2025-12-21] asin
