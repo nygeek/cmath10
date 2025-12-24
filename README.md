@@ -54,6 +54,9 @@ ENTER +.
 
 ## CHANGELOG
 
+Moved smoke test from cmath10.py main() to a separate file,
+smoke.py
+
 ## NEWS
 
 ## Install
@@ -115,3 +118,4 @@ ENTER +.
 1. [2025-12-21] div
     * Scalar from decimal.py
     * Complex 2025-12-21
+1. [2025-12-24] Set up precision and clamping to emulate HP-35 behavior
