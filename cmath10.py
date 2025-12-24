@@ -31,6 +31,7 @@ class DecimalEncoder(json.JSONEncoder):
             return str(o)
         return super().default(o)
 
+
 def decimal_decoder(dct):
     """ Convert to Decimal in JSON handler """
     for key, value in dct.items():
@@ -124,23 +125,18 @@ def scalar_asin(x):
         arcsin(x) = x + (1/2)(x^3/3) + (1*3)/(2*4)(x^5/5)
             + (1*3*5)/(2*4*6)(x^7/7) + ...
         """
-
     getcontext().prec += 2
-
     if abs(x) > 1:
         raise ValueError("arcsin(x) requires |x| <= 1")
-
     if abs(x) > Decimal('0.7'):
         sign = 1 if x >= 0 else -1
         result = scalar_pi() / 2 - \
             scalar_asin((1 - x*x).sqrt()) * sign
         getcontext().prec -= 2
         return +result
-
     power = x
     result = x
     i = 1
-
     while True:
         power *= x * x * (2*i - 1) * (2*i - 1) / ((2*i) * (2*i + 1))
         term = power
@@ -148,7 +144,6 @@ def scalar_asin(x):
             break
         result += term
         i += 1
-
     getcontext().prec -= 2
     return +result
 
@@ -162,14 +157,12 @@ def scalar_atan(x):
     """
     getcontext().prec += 2
     x = Decimal(x)
-
     # For |x| > 1, use the identity to improve convergence
     if abs(x) > 1:
         sign = 1 if x > 0 else -1
         result = sign * scalar_pi() / 2 - scalar_atan(1 / x)
         getcontext().prec -= 2
         return +result
-
     # For values close to 1, use scalar_atan(x) =
     #   pi/4 + scalar_atan((x-1)/(x+1)) to improve convergence
     if abs(x) > Decimal('0.5'):
@@ -178,11 +171,9 @@ def scalar_atan(x):
             result += scalar_atan((x - 1) / (x + 1))
         getcontext().prec -= 2
         return +result
-
     power = x
     result = x
     i = 1
-
     while True:
         power *= -x * x
         term = power / (2 * i + 1)
@@ -190,7 +181,6 @@ def scalar_atan(x):
             break
         result += term
         i += 1
-
     getcontext().prec -= 2
     return +result
 
@@ -200,8 +190,11 @@ def scalar_atan2(x, y):
     _sign = 1
     if y < 0:
         _sign = -1
+    getcontext().prec += 2
     _ratio = x / y
-    return _sign * scalar_atan(_ratio)
+    _result =  _sign * scalar_atan(_ratio)
+    getcontext().prec -= 2
+    return _result
 
 
 # ----- Main CMath10 class ----- #
@@ -229,34 +222,42 @@ class CMath10:
 
     def add(self, b):
         """ Implement self + b """
+        getcontext().prec += 2
         self.real += b.real
         self.imag += b.imag
+        getcontext().prec -= 2
         return self
 
 
     def sub(self, b):
         """ Implement self - b """
+        getcontext().prec += 2
         self.real -= b.real
         self.imag -= b.imag
+        getcontext().prec -= 2
         return self
 
 
     def mul(self, b):
         """ Implement self * b """
+        getcontext().prec += 2
         _real = (self.real * b.real) - (self.imag * b.imag)
         _imag = (self.real * b.imag) + (self.imag * b.real)
         self.real = _real
         self.imag = _imag
+        getcontext().prec -= 2
         return self
 
 
     def div(self, b):
         """ Implement self / b """
+        getcontext().prec += 2
         _denominator = (b.real * b.real) + (b.imag * b.imag)
         _real = (self.real * b.real) + (self.imag * b.imag)
         _imag = (self.imag * b.real) - (self.real * b.imag)
         self.real = _real / _denominator
         self.imag = _imag / _denominator
+        getcontext().prec -= 2
         return self
 
 
@@ -269,11 +270,13 @@ class CMath10:
 
     def exp(self):
         """ exp(a+bi) = exp(a)*(cos(b)+isin(b)) """
+        getcontext().prec +=2
         _mag = self.real.exp()
         _real = _mag * scalar_cos(self.imag)
         _imag = _mag * scalar_sin(self.imag)
         self.real = _real
         self.imag = _imag
+        getcontext().prec -=2
         return self
 
 
@@ -294,19 +297,25 @@ class CMath10:
     def sqrt(self):
         """ square root of z """
         # Principal square root.  There is another, of course
+        getcontext().prec +=2
         _r = self.scalar_abs()
         _sign = 1
         if self.imag < 0:
             _sign = -1
-        return CMath10( ((_r + self.real)/2).sqrt(), 
+        _result = CMath10( ((_r + self.real)/2).sqrt(), 
                        _sign * ((_r - self.real)/2).sqrt())
+        getcontext().prec -=2
+        return _result
 
 
 # ----- scalar result on complex numbers ----- #
 
     def scalar_abs(self):
         """ aka mag """
-        return (self.real * self.real + self.imag * self.imag).sqrt()
+        getcontext().prec +=2
+        _result = (self.real * self.real + self.imag * self.imag).sqrt()
+        getcontext().prec -=2
+        return _result
 
 
 def main():
