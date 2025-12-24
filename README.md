@@ -59,22 +59,8 @@ smoke.py
 
 ## NEWS
 
-## Install
-
-## Copying, License
-
-## Bugs
-
-## Contributing
-
-## FAQ
-
-## TODO
-
 1. [2025-12-21] phase
     * 2025-12-22
-1. [2025-12-21] polar
-1. [2025-12-21] rect
 1. [2025-12-21] exp
     * Scalar from decimal.py
     * Complex 2025-12-22
@@ -96,12 +82,6 @@ smoke.py
     * Scalar 2025-12-22
 1. [2025-12-21] tan
     * Scalar 2025-12-22
-1. [2025-12-21] acosh
-1. [2025-12-21] asinh
-1. [2025-12-21] atanh
-1. [2025-12-21] cosh
-1. [2025-12-21] sinh
-1. [2025-12-21] tanh
 1. [2025-12-21] pi
     * Scalar 2025-12-22
 1. [2025-12-21] e
@@ -118,4 +98,37 @@ smoke.py
 1. [2025-12-21] div
     * Scalar from decimal.py
     * Complex 2025-12-21
+
+## Install
+
+## Copying, License
+
+## Bugs
+
+## Contributing
+
+## FAQ
+
+## TODO
+
+1. [2025-12-21] polar
+1. [2025-12-21] rect
+
+1. [2025-12-21] acosh
+1. [2025-12-21] asinh
+1. [2025-12-21] atanh
+
+1. [2025-12-21] cosh
+1. [2025-12-21] sinh
+1. [2025-12-21] tanh
+
 1. [2025-12-24] Set up precision and clamping to emulate HP-35 behavior
+
+1. [2025-12-24] Complex acos
+1. [2025-12-24] Complex asin
+1. [2025-12-24] Complex atan, atan2
+1. [2025-12-24] Complex cos
+1. [2025-12-24] Complex sin
+1. [2025-12-24] Complex tan
+1. [2025-12-21] Complex pi
+1. [2025-12-21] Complex e
