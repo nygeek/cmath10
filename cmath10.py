@@ -195,6 +195,15 @@ def scalar_atan(x):
     return +result
 
 
+def scalar_atan2(x, y):
+    """ inverse tangent x / y, with sign of y """
+    _sign = 1
+    if y < 0:
+        _sign = -1
+    _ratio = x / y
+    return _sign * scalar_atan(_ratio)
+
+
 # ----- Main CMath10 class ----- #
 
 class CMath10:
@@ -265,12 +274,26 @@ class CMath10:
 
     def phase(self):
         """ phase of z, aka arg z """
-        _ratio = self.imag / self.real
-        _real = scalar_atan(_ratio)
-        _sign = 1
-        if self.imag < 0:
-            _sign = -1
-        return CMath10(_sign * _real, 0)
+        return CMath10(scalar_atan2(self.real, self.imag), Decimal(0))
+
+
+    def scalar_abs(self):
+        """ aka mag """
+        return (self.real * self.real + self.imag * self.imag).sqrt()
+
+
+    def abs(self):
+        """ aka mag """
+        return CMath10(self.scalar_abs(), 0)
+
+
+    def log(self):
+        """ natural logarithm of z """
+        # note: in cmath log is natural log, log10 is decimal log
+        # note: in decimal.py ln is natural log
+        _real = self.scalar_abs().ln() / 2 # this calls decimal.py ln
+        _imag = scalar_atan2(self.imag, self.real)
+        return CMath10(_real, _imag)
 
 
 def main():
@@ -321,6 +344,11 @@ def main():
     print(f"phase(z: {z}): {z.phase()}")
     z = CMath10("1", "-1")
     print(f"phase(z: {z}): {z.phase()}")
+    z = CMath10("3", "4")
+    r = z.scalar_abs()
+    print(f"scalar_abs(z: {z}): {r}")
+    z = CMath10("3", "4")
+    print(f"log(z: {z}): {z.log()}")
 
 
 if __name__ == '__main__':
