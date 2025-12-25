@@ -70,6 +70,9 @@ def scalar_e():
 
 # ----- scalar trigonometric functions ----- #
 
+# Thinking about whether to split these scalar decimal functions
+# out into a separate class.
+
 def scalar_cos(x):
     """ return cosine """
     # from docs.python.org/3/library/decimal.html#recipes.
@@ -194,6 +197,30 @@ def scalar_atan2(x, y):
     _ratio = x / y
     _result =  _sign * scalar_atan(_ratio)
     getcontext().prec -= 2
+    return _result
+
+
+def scalar_cosh(x):
+    """ hyperbolic cosine """
+    getcontext().prec += 2
+    _result = (x.exp() + (-x).exp()) / 2
+    getcontext().prec -=2
+    return _result
+
+
+def scalar_sinh(x):
+    """ hyperbolic sine """
+    getcontext().prec += 2
+    _result = (x.exp() - (-x).exp()) / 2
+    getcontext().prec -=2
+    return _result
+
+
+def scalar_tanh(x):
+    """ hyperbolic sine """
+    getcontext().prec += 2
+    _result = (x.scalar_sinh() - (-x).scalar_cosh()) / 2
+    getcontext().prec -=2
     return _result
 
 
