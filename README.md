@@ -78,14 +78,19 @@ smoke.py
     * Scalar 2025-12-22
 1. [2025-12-21] cos
     * Scalar 2025-12-22
+    * Complex 2025-12-25
 1. [2025-12-21] sin
     * Scalar 2025-12-22
+    * Complex 2025-12-25
 1. [2025-12-21] tan
     * Scalar 2025-12-22
+    * Complex 2025-12-25
 1. [2025-12-21] pi
     * Scalar 2025-12-22
+    * Complex 2025-12-25
 1. [2025-12-21] e
     * Scalar 2025-12-22
+    * Complex 2025-12-25
 1. [2025-12-21] add
     * Scalar from decimal.py
     * Complex 2025-12-21
@@ -127,8 +132,5 @@ smoke.py
 1. [2025-12-24] Complex acos
 1. [2025-12-24] Complex asin
 1. [2025-12-24] Complex atan, atan2
-1. [2025-12-24] Complex cos
-1. [2025-12-24] Complex sin
-1. [2025-12-24] Complex tan
 1. [2025-12-21] Complex pi
 1. [2025-12-21] Complex e

@@ -288,7 +288,19 @@ class CMath10:
         return self
 
 
-# ----- complex math ----- #
+# ----- complex constants ----- #
+
+    def pi(self):
+        """ (pi, 0) """
+        return CMath10(scalar_pi(), Decimal("0"))
+
+
+    def e(self):
+        """ (e, 0) """
+        return CMath10(scalar_e(), Decimal("0"))
+
+
+# ----- complex higher math ----- #
 
     def abs(self):
         """ aka mag """
@@ -329,9 +341,40 @@ class CMath10:
         _sign = 1
         if self.imag < 0:
             _sign = -1
-        _result = CMath10( ((_r + self.real)/2).sqrt(), 
-                       _sign * ((_r - self.real)/2).sqrt())
+        _result = CMath10(((_r + self.real)/2).sqrt(), 
+                          _sign * ((_r - self.real)/2).sqrt())
         getcontext().prec -=2
+        return _result
+
+
+    def cos(self):
+        """ complex cosine """
+        getcontext().prec += 2
+        _real = scalar_cos(self.real) * scalar_cosh(self.imag)
+        _imag = scalar_sin(self.real) * scalar_sinh(self.imag)
+        _imag = Decimal("-1") * _imag
+        _result = CMath10(_real, _imag)
+        getcontext().prec -= 2
+        return _result
+
+
+    def sin(self):
+        """ complex sine """
+        getcontext().prec += 2
+        _real = scalar_sin(self.real) * scalar_cosh(self.imag)
+        _imag = scalar_cos(self.real) * scalar_sinh(self.imag)
+        _result = CMath10(_real, _imag)
+        getcontext().prec -= 2
+        return _result
+
+
+    def tan(self):
+        """ complex tangent """
+        getcontext().prec += 2
+        _num = self.sin()
+        _den = self.cos()
+        _result = _num.div(_den)
+        getcontext().prec -= 2
         return _result
 
 
