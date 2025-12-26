@@ -2,3 +2,5 @@
 bin/
 include/
 lib/
+.cmath10.py.swp
+__pycache__/
