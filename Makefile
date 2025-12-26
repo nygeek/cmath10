@@ -37,6 +37,7 @@ PWD := $(shell pwd)
 PYTHON_CODE = \
 	cmath10.py \
 	csmoke.py \
+	math10.py \
 	ssmoke.py \
 	trace_debug.py
 
