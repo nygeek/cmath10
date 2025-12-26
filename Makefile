@@ -58,7 +58,7 @@ pyling:
 
 .PHONY: run
 test:
-	${PYTHON} ssmoke.py
+	${PYTHON} csmoke.py
 
 %.ps: %.py
 	${ENSCRIPT} -G $< -o $@

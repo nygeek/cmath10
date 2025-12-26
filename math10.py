@@ -193,7 +193,7 @@ class Math10(Decimal):
         if y < 0:
             _sign = -1
         _ratio = _x / y
-        _result =  _sign * _ratio.atan()
+        _result =  _sign * Math10(_ratio).atan()
         getcontext().prec -= 2
         return Math10(_result)
 
