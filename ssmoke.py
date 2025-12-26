@@ -17,6 +17,7 @@ from trace_debug import DebugTrace
 def main():
     """ simple smoke test """
     DebugTrace(False)
+    # DebugTrace(True)
     pi = Math10.pi()
     print(f"pi: {pi}")
 

@@ -115,7 +115,7 @@ class Math10(Decimal):
 
     def acos(self):
         """ inverse cosine """
-        return (Math10.pi() / 2) - Math10(self).asin()
+        return (Math10.pi() / 2) - self.asin()
 
 
     def asin(self):
@@ -132,7 +132,7 @@ class Math10(Decimal):
         if abs(_x) > Decimal('0.7'):
             sign = 1 if _x >= 0 else -1
             result = Math10.pi() / 2 - \
-                Math10(1 - _x*_x).asin().sqrt() * sign
+                Math10((1 - _x*_x).sqrt()).asin() * sign
             getcontext().prec -= 2
             return Math10(+result)
         power = _x
