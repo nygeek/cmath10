@@ -36,7 +36,8 @@ PWD := $(shell pwd)
 
 PYTHON_CODE = \
 	cmath10.py \
-	smoke.py \
+	csmoke.py \
+	ssmoke.py \
 	trace_debug.py
 
 FILES = \
@@ -56,7 +57,7 @@ pyling:
 
 .PHONY: run
 test:
-	${PYTHON} smoke.py
+	${PYTHON} ssmoke.py
 
 %.ps: %.py
 	${ENSCRIPT} -G $< -o $@

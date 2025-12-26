@@ -245,6 +245,11 @@ class CMath10:
         return "(" + str(self.real) + str(self.imag) + "j)"
 
 
+    def __repr__(self):
+        """ return the representation of CMath10 object """
+        return f"CMath10('{str(self)}')"
+
+
 # ----- Basic complex arithmetic ----- #
 
     def add(self, b):
