@@ -52,6 +52,7 @@ def main():
     print(f"phase(z: {z}): {z.phase()}")
     z = CMath10("1", "-1")
     print(f"phase(z: {z}): {z.phase()}\n")
+
     z = CMath10("3", "4")
     r = z.scalar_abs()
     print(f"scalar_abs(z: {z}): {r}\n")

@@ -185,14 +185,12 @@ class Math10(Decimal):
         return Math10(+result)
 
 
-    def atan2(self, y):
+    @staticmethod
+    def atan2(x, y):
         """ inverse tangent x / y, with sign of y """
         getcontext().prec += 2
-        _x = self
-        _sign = 1
-        if y < 0:
-            _sign = -1
-        _ratio = _x / y
+        _sign = 1 if y >= 0 else -1
+        _ratio = x / y
         _result =  _sign * Math10(_ratio).atan()
         getcontext().prec -= 2
         return Math10(_result)

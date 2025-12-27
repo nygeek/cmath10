@@ -145,13 +145,13 @@ class CMath10:
         # note: in cmath log is natural log, log10 is decimal log
         # note: in decimal.py ln is natural log
         _real = self.scalar_abs().ln() # this calls decimal.py ln
-        _imag = Math10(self.imag).atan2(self.real)
+        _imag = Math10.atan2(self.real, self.imag)
         return CMath10(_real, _imag)
 
 
     def phase(self):
         """ phase of z, aka arg z """
-        return CMath10(Math10(self.imag).atan2(self.real), Decimal(0))
+        return CMath10(Math10.atan2(self.real, self.imag), Decimal(0))
 
 
     def sqrt(self):
@@ -159,9 +159,7 @@ class CMath10:
         # Principal square root.  There is another, of course
         getcontext().prec +=2
         _r = self.scalar_abs()
-        _sign = 1
-        if self.imag < 0:
-            _sign = -1
+        _sign = 1 if self.imag >= 0 else -1
         _result = CMath10(((_r + self.real)/2).sqrt(), 
                           _sign * ((_r - self.real)/2).sqrt())
         getcontext().prec -=2
