@@ -92,6 +92,17 @@ def main():
     pi = CMath10.pi()
     print(f"pi(): {pi}")
 
+    z = CMath10(1,1)
+    print(f"z: {z}")
+    print(f"z^2: {z.mul(z)}")
+
+
+    z1 = CMath10(3, 4)
+    print(f"z1: {z1}")
+    z2 = CMath10(1, 2)
+    print(f"z2: {z2}")
+    print(f"z1/z2: {z1.div(z2)}")
+
 
 if __name__ == '__main__':
     main()

@@ -130,6 +130,11 @@ class CMath10:
         return CMath10(scalar_abs(), 0)
 
 
+    def acos(self):
+        """ inverse cosine of a complex number """
+        _zz = self.mul(self)
+
+
     def exp(self):
         """ exp(a+bi) = exp(a)*(cos(b)+isin(b)) """
         getcontext().prec +=2

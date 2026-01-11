@@ -1,4 +1,4 @@
-""" Smoke test for CMath10 class
+""" Smoke test for Math10 class
 
 Started 2025-12-24
 

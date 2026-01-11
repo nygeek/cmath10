@@ -65,6 +65,40 @@ class Math10(Decimal):
         """ return e """
         return Decimal('1').exp()
 
+# ----- arithmetic functions ----- #
+
+    def add(self, z):
+        """ add """
+        _real = self.real + z.real
+        _imag = self.imag + z.imag
+        _result = Math10(_real, _imag)
+        return _result
+
+
+    def div(self, z):
+        """ divide """
+        _denom = (z.real * z.real) + (z.imag * z.imag)
+        _real = (self.real * z.real) + (self.imag * z.imag) / _denom
+        _imag = (self.imag * z.real) - (self.real * z.imag) / _denom
+        _result = Math10(_real, _imag)
+        return _result
+
+
+    def mul(self, z):
+        """ multiply """
+        _real = self.real * z.real - self.imag * z.imag
+        _imag = self.real * z.imag + self.imag * z.real
+        _result = Math10(_real, _imag)
+        return _result
+
+
+    def sub(self, z):
+        """ subtract """
+        _real = self.real - z.real
+        _imag = self.imag - z.imag
+        _result = Math10(_real, _imag)
+        return _result
+
 
 # ----- trigonometric functions ----- #
 
