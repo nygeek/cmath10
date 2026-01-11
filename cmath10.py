@@ -68,45 +68,58 @@ class CMath10:
 
 # ----- Basic complex arithmetic ----- #
 
-    def add(self, b):
+    def add(self, z):
         """ Implement self + b """
         getcontext().prec += 2
-        self.real += b.real
-        self.imag += b.imag
+        self.real += z.real
+        self.imag += z.imag
         getcontext().prec -= 2
         return self
 
 
-    def sub(self, b):
+    def sub(self, z):
         """ Implement self - b """
         getcontext().prec += 2
-        self.real -= b.real
-        self.imag -= b.imag
+        self.real -= z.real
+        self.imag -= z.imag
         getcontext().prec -= 2
         return self
 
 
-    def mul(self, b):
+    def mul(self, z):
         """ Implement self * b """
         getcontext().prec += 2
-        _real = (self.real * b.real) - (self.imag * b.imag)
-        _imag = (self.real * b.imag) + (self.imag * b.real)
+        _real = (self.real * z.real) - (self.imag * z.imag)
+        _imag = (self.real * z.imag) + (self.imag * z.real)
         self.real = _real
         self.imag = _imag
         getcontext().prec -= 2
         return self
 
 
-    def div(self, b):
+    def div(self, z):
         """ Implement self / b """
         getcontext().prec += 2
-        _denominator = (b.real * b.real) + (b.imag * b.imag)
-        _real = (self.real * b.real) + (self.imag * b.imag)
-        _imag = (self.imag * b.real) - (self.real * b.imag)
+        _denominator = (z.real * z.real) + (z.imag * z.imag)
+        _real = (self.real * z.real) + (self.imag * z.imag)
+        _imag = (self.imag * z.real) - (self.real * z.imag)
         self.real = _real / _denominator
         self.imag = _imag / _denominator
         getcontext().prec -= 2
         return self
+
+
+    def sqrt(self):
+        """ implement square root of complex number """
+        # It would be more elegant to convert to polar form, but
+        # have not introduced cartesian / polar flag yet
+        _mag = self.scalar_abs()
+        _sgn = 1 if self.imag >= 0 else -1
+        # Using Decimal sqrt here ...
+        _real = ((_mag + self.real)/2).sqrt()
+        _imag = _sgn * ((_mag + self.real)/2).sqrt()
+        _result = Complex10(_real, _imag)
+        return _result
 
 
 # ----- complex constants ----- #
@@ -132,7 +145,9 @@ class CMath10:
 
     def acos(self):
         """ inverse cosine of a complex number """
-        _zz = self.mul(self)
+        _zz = CMath10(self.real, self.imag)
+        _zz = _zz.mul(_zz)
+
 
 
     def exp(self):

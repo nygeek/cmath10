@@ -101,7 +101,14 @@ def main():
     print(f"z1: {z1}")
     z2 = CMath10(1, 2)
     print(f"z2: {z2}")
+    print(f"(expect 2.2 - 0.4i)")
     print(f"z1/z2: {z1.div(z2)}")
+
+
+    z = CMath10(3, 4)
+    print(f"z: {z}")
+    print(f"(expect 2+1i)")
+    print(f"sqrt(z): {z.sqrt()}")
 
 
 if __name__ == '__main__':
