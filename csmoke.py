@@ -63,8 +63,8 @@ def main():
     print(f"e^(log(z)): {z2.exp()}\n")
 
     z = CMath10("2", "2")
-    z2 = z.sqrt()
-    print(f"sqrt(z: {z}): {z2}\n")
+    print(f"(expect (1.5537739740300374+0.6435942529055826j))")
+    print(f"sqrt(z: {z}): {z.sqrt()}\n")
 
     z = CMath10("4", "0")
     z2 = z.sqrt()
@@ -105,10 +105,14 @@ def main():
     print(f"z1/z2: {z1.div(z2)}")
 
 
-    z = CMath10(3, 4)
+    z = CMath10("1", "1")
+    print(f"(expect: (0.8337300251311491-0.9888977057628651j))")
+    print(f"cos(z: {z}): {z.cos()}")
+
+    z = CMath10("1", "1")
     print(f"z: {z}")
-    print(f"(expect 2+1i)")
-    print(f"sqrt(z): {z.sqrt()}")
+    print(f"cos(z): {z.cos()}")
+    print(f"acos(cos(z: {z})): {z.cos().acos()}")
 
 
 if __name__ == '__main__':
