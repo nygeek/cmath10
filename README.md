@@ -106,6 +106,16 @@ smoke.py
 
 ## Install
 
+This module should be installed to support CNC10, the decimal complex
+number calculator.  Since none of this stuff is a public Python
+library you will need to install it locally on your system:
+
+```> git clone https://github.com/nygeek/cmath10.git```
+
+And then use pip to install it for the calculator:
+
+```> pip install -e ~/projects/c/cmath10```
+
 ## Copying, License
 
 ## Bugs
