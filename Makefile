@@ -38,14 +38,14 @@ PYTHON_CODE = \
 	cmath10.py \
 	csmoke.py \
 	math10.py \
-	ssmoke.py \
-	trace_debug.py
+	ssmoke.py
 
 FILES = \
 	${PYTHON_CODE} \
 	Makefile \
 	.gitattributes \
 	.gitignore \
+	pyproject.toml \
 	pyvenv.cfg \
 	README.md
 
@@ -53,7 +53,7 @@ FILES = \
 lint:
 	pylint ${PYTHON_CODE}
 
-pyling:
+pylint:
 	pylint ${PYTHON_CODE}
 
 .PHONY: run

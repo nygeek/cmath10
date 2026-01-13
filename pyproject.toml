@@ -1,0 +1,16 @@
+[build-system]
+requires = ["setuptools", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "cmath10"
+version = "1.0"
+readme = "README.md"
+description = "Decimal Complex Math classes - CMath10 and Math10"
+authors = [
+    { name = "Marc Donner", email = "marc.donner@gmail.com" },
+    ]
+requires-python = ">=3.9"
+
+[tool.setuptools]
+py-modules = ["math10", "cmath10"]

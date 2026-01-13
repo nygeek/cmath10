@@ -40,6 +40,9 @@ def decimal_decoder(dct):
                 pass
     return dct
 
+def isclose(a, b, rel_tol=1e-15, abs_tol=0.0):
+    return a.isclose(b, rel_tol, abs_tol)
+
 # ----- Main CMath10 class ----- #
 
 class CMath10:
@@ -68,6 +71,10 @@ class CMath10:
 
     def copy(self):
         return CMath10(self.real, self.imag)
+
+
+    def isclose(self, z, rel_tol=1e-15, abs_tol=0.0):
+        return True if self.sub(z).scalar_abs() < err else False
 
 
 # ----- Basic complex arithmetic ----- #
@@ -222,6 +229,10 @@ class CMath10:
         _result = Math10.atan2(self.imag, self.real)
         getcontext().prec -=2
         return _result
+
+
+# ----- alias ----- #
+complex = CMath10
 
 
 def main():
