@@ -4,3 +4,5 @@ include/
 lib/
 .cmath10.py.swp
 __pycache__/
+*.pdf
+cmath10.egg-info/
