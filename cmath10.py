@@ -43,90 +43,6 @@ def decimal_decoder(dct):
 def isclose(a, b, rel_tol=1e-15, abs_tol=0.0):
     return a.isclose(b, rel_tol, abs_tol)
 
-# ----- StdLibAdapter class ----- #
-
-class StdLibAdapter:
-    """ Make CMath10 (OO) look like cmath (functional)."""
-    complex = CMath10
-
-    @staticmethod
-    def sqrt(z):
-        """ functional form of sqrt """
-        return z.sqrt()
-
-    @staticmethod
-    def abs(z):
-        """ functional form of abs """
-        # This is a complex result.  Should we return .real()?
-        return z.abs()
-
-    @staticmethod
-    def add(a, b):
-        """ functional form of add """
-        return a.add(b)
-
-    @staticmethod
-    def sub(a, b):
-        """ functional form of sub """
-        return a.sub(b)
-
-    @staticmethod
-    def mul(a, b):
-        """ functional form of mul """
-        return a.mul(b)
-
-    @staticmethod
-    def div(a, b):
-        """ functional form of div """
-        return a.div(b)
-
-    @staticmethod
-    def isclose(a, b, rel_tol=1e-15):
-        """ functional form of isclose """
-        return a.isclose(b, rel_tol)
-
-# ----- Higher math ----- #
-
-    @staticmethod
-    def acos(z):
-        """ functional form of acos """
-        return z.acos()
-
-    @staticmethod
-    def asin(z):
-        """ functional form of asin """
-        return z.asin()
-
-    @staticmethod
-    def atan(z):
-        """ functional form of atan """
-        return z.atan()
-
-    @staticmethod
-    def cos(z):
-        """ functional form of cos """
-        return z.cos()
-
-    @staticmethod
-    def sin(z):
-        """ functional form of sin """
-        return z.sin()
-
-    @staticmethod
-    def tan(z):
-        """ functional form of tan """
-        return z.tan()
-
-    @staticmethod
-    def exp(z):
-        """ functional form of exp """
-        return z.exp()
-
-    @staticmethod
-    def log(z):
-        """ functional form of log """
-        return z.log()
-
 # ----- Main CMath10 class ----- #
 
 class CMath10:
@@ -315,8 +231,92 @@ class CMath10:
         return _result
 
 
+# ----- StdLibAdapter class ----- #
+
+class StdLibAdapter:
+    """ Make CMath10 (OO) look like cmath (functional)."""
+    complex = CMath10
+
+    @staticmethod
+    def sqrt(z):
+        """ functional form of sqrt """
+        return z.sqrt()
+
+    @staticmethod
+    def abs(z):
+        """ functional form of abs """
+        # This is a complex result.  Should we return .real()?
+        return z.abs()
+
+    @staticmethod
+    def add(a, b):
+        """ functional form of add """
+        return a.add(b)
+
+    @staticmethod
+    def sub(a, b):
+        """ functional form of sub """
+        return a.sub(b)
+
+    @staticmethod
+    def mul(a, b):
+        """ functional form of mul """
+        return a.mul(b)
+
+    @staticmethod
+    def div(a, b):
+        """ functional form of div """
+        return a.div(b)
+
+    @staticmethod
+    def isclose(a, b, rel_tol=1e-15):
+        """ functional form of isclose """
+        return a.isclose(b, rel_tol)
+
+# ----- Higher math ----- #
+
+    @staticmethod
+    def acos(z):
+        """ functional form of acos """
+        return z.acos()
+
+    @staticmethod
+    def asin(z):
+        """ functional form of asin """
+        return z.asin()
+
+    @staticmethod
+    def atan(z):
+        """ functional form of atan """
+        return z.atan()
+
+    @staticmethod
+    def cos(z):
+        """ functional form of cos """
+        return z.cos()
+
+    @staticmethod
+    def sin(z):
+        """ functional form of sin """
+        return z.sin()
+
+    @staticmethod
+    def tan(z):
+        """ functional form of tan """
+        return z.tan()
+
+    @staticmethod
+    def exp(z):
+        """ functional form of exp """
+        return z.exp()
+
+    @staticmethod
+    def log(z):
+        """ functional form of log """
+        return z.log()
+
 # ----- alias ----- #
-complex = CMath10
+# complex = CMath10
 
 
 def main():
