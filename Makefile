@@ -75,8 +75,7 @@ Makefile.ps: Makefile
 
 listings: \
 	Makefile.pdf \
-	cmath10.pdf \
-	trace_debug.pdf
+	cmath10.pdf
 
 
 .PHONY: clean
