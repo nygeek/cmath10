@@ -165,6 +165,13 @@ class CMath10:
         return CMath10(_real, _imag)
 
 
+    def log10(self):
+        """ natural logarithm of z """
+        # note: in cmath log is natural log, log10 is decimal log
+        # note: in decimal.py ln is natural log
+        return self.log().div(CMath10(10,0).log())
+
+
     def phase(self):
         """ phase of z, aka arg z """
         return CMath10(Math10.atan2(self.real, self.imag), Decimal(0))
@@ -235,7 +242,10 @@ class CMath10:
 
 class StdLibAdapter:
     """ Make CMath10 (OO) look like cmath (functional)."""
-    complex = CMath10
+    @staticmethod
+    def complex(real, imag=0):
+        """ create a CMath10 complex number """
+        return CMath10(real, imag)
 
     @staticmethod
     def sqrt(z):
@@ -247,6 +257,11 @@ class StdLibAdapter:
         """ functional form of abs """
         # This is a complex result.  Should we return .real()?
         return z.abs()
+
+    @staticmethod
+    def phase(z):
+        """ functional form of phase """
+        return z.phase()
 
     @staticmethod
     def add(a, b):
@@ -274,6 +289,16 @@ class StdLibAdapter:
         return a.isclose(b, rel_tol)
 
 # ----- Higher math ----- #
+
+    @staticmethod
+    def e():
+        """ functional form of pi """
+        return CMath10(Math10.e(), Decimal("0"))
+
+    @staticmethod
+    def pi():
+        """ functional form of pi """
+        return CMath10(Math10.pi(), Decimal("0"))
 
     @staticmethod
     def acos(z):
@@ -315,8 +340,11 @@ class StdLibAdapter:
         """ functional form of log """
         return z.log()
 
-# ----- alias ----- #
-# complex = CMath10
+
+    @staticmethod
+    def log10(z):
+        """ functional form of log """
+        return z.log10()
 
 
 def main():

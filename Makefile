@@ -56,8 +56,10 @@ lint:
 pylint:
 	pylint ${PYTHON_CODE}
 
-.PHONY: run
+.PHONY: test
 test:
+	${PYTHON} csmoke.py
+
 %.ps: %.py
 	${ENSCRIPT} -G $< -o $@
 
