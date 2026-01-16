@@ -58,8 +58,6 @@ pylint:
 
 .PHONY: run
 test:
-	${PYTHON} csmoke.py
-
 %.ps: %.py
 	${ENSCRIPT} -G $< -o $@
 
@@ -75,7 +73,8 @@ Makefile.ps: Makefile
 
 listings: \
 	Makefile.pdf \
-	cmath10.pdf
+	cmath10.pdf \
+	math10.pdf 
 
 
 .PHONY: clean
