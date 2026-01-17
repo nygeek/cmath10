@@ -121,14 +121,14 @@ class CMath10:
         """ Implement self / b """
         getcontext().prec += 2
         _denominator = (z.real * z.real) + (z.imag * z.imag)
-        _real = (self.real * z.real) + (self.imag * z.imag)
-        _imag = (self.imag * z.real) - (self.real * z.imag)
+        _real = ((self.real * z.real) + (self.imag * z.imag))/_denominator
+        _imag = ((self.imag * z.real) - (self.real * z.imag))/_denominator
         _result = CMath10(_real, _imag)
         getcontext().prec -= 2
         return _result
 
 
-    def __div__(self, z):
+    def __truediv__(self, z):
         return self.div(z)
 
 
