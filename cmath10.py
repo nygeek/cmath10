@@ -87,12 +87,20 @@ class CMath10:
         return _result
 
 
+    def __add__(self, z):
+        return self.add(z)
+
+
     def sub(self, z):
         """ Implement self - b """
         getcontext().prec += 2
         _result = CMath10(self.real - z.real, self.imag - z.imag)
         getcontext().prec -= 2
         return _result
+
+
+    def __sub__(self, z):
+        return self.sub(z)
 
 
     def mul(self, z):
@@ -105,6 +113,10 @@ class CMath10:
         return _result
 
 
+    def __mul__(self, z):
+        return self.mul(z)
+
+
     def div(self, z):
         """ Implement self / b """
         getcontext().prec += 2
@@ -114,6 +126,10 @@ class CMath10:
         _result = CMath10(_real, _imag)
         getcontext().prec -= 2
         return _result
+
+
+    def __div__(self, z):
+        return self.div(z)
 
 
 # ----- complex constants ----- #
