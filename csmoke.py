@@ -96,14 +96,12 @@ def main():
     print(f"z: {z}")
     print(f"z^2: {z.mul(z)}")
 
-
     z1 = CMath10(3, 4)
     print(f"z1: {z1}")
     z2 = CMath10(1, 2)
     print(f"z2: {z2}")
     print(f"(expect 2.2 - 0.4i)")
     print(f"z1/z2: {z1.div(z2)}")
-
 
     z = CMath10("1", "1")
     print(f"(expect: (0.8337300251311491-0.9888977057628651j))")
@@ -113,6 +111,14 @@ def main():
     print(f"z: {z}")
     print(f"cos(z): {z.cos()}")
     print(f"acos(cos(z: {z})): {z.cos().acos()}")
+
+    z = CMath10(0, 0)
+    print(f"z: {z}")
+    print(f"acos(z): {z.acos()}")
+
+    z = CMath10(-1, 0)
+    print(f"z: {z}")
+    print(f"acos(z): {z.acos()}")
 
 
 if __name__ == '__main__':

@@ -190,8 +190,11 @@ class Math10(Decimal):
         """ inverse tangent x / y, with sign of y """
         getcontext().prec += 2
         _sign = 1 if y >= 0 else -1
-        _ratio = x / y
-        _result =  _sign * Math10(_ratio).atan()
+        if y != 0:
+            _ratio = x / y
+            _result = _sign * Math10(_ratio).atan()
+        else:
+            _result = Math10.pi() / 2
         getcontext().prec -= 2
         return Math10(_result)
 

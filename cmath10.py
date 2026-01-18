@@ -51,6 +51,7 @@ class CMath10:
 
     def __init__(self, real, imag, precision=32):
         """ Initialize a complex decimal. """
+        # print(f"DEBUG CMath10(real: {real}, imag: {imag})")
         self.real = Decimal(real)
         self.imag = Decimal(imag)
         self.precision = precision
@@ -156,9 +157,8 @@ class CMath10:
     def acos(self):
         """ inverse cosine of a complex number """
         _zz = self.mul(self)
-        _i = CMath10(0, 1)
-        _a = CMath10(1,0).sub(_zz).sqrt().mul(_i).add(self)
-        _result = _a.log().mul(_i).mul(-1)
+        _i = CMath10(0,1)
+        _result = _zz.sub(CMath10(1,0)).sqrt().add(self).log().div(_i)
         return _result
 
 
