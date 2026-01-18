@@ -151,7 +151,8 @@ class CMath10:
 
     def abs(self):
         """ aka mag """
-        return CMath10(scalar_abs(), 0)
+        print(f"DEBUG abs(self: {self})")
+        return CMath10(self.scalar_abs(), 0)
 
 
     def acos(self):
@@ -272,6 +273,7 @@ class StdLibAdapter:
     def abs(z):
         """ functional form of abs """
         # This is a complex result.  Should we return .real()?
+        print(f"DEBUG StdLibAdapter: abs(z): {z}")
         return z.abs()
 
     @staticmethod
