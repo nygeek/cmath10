@@ -43,6 +43,11 @@ class Math10(Decimal):
     """ Class to implement trig and other math functions using
         decimal.py numbers. """
 
+    def __init__(self, rel_tol=1e-15):
+        super().__init__()
+        self.rel_tol = rel_tol
+
+
     @staticmethod
     def pi():
         """ return pi """

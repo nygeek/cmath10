@@ -60,9 +60,11 @@ class CMath10:
 
     def __str__(self):
         """ return a string representation of the number """
-        if self.imag >= 0:
-            return "(" + str(self.real) + "+" + str(self.imag) + "j)"
-        return "(" + str(self.real) + str(self.imag) + "j)"
+        sgn = "+" if self.imag >= 0 else "-"
+        tol = Decimal(10) ** -self.precision
+        _real = 0 if abs(self.real) < tol else self.real
+        _imag = 0 if abs(self.imag) < tol else self.imag
+        return "(" + str(_real) + sgn + str(_imag) + "i)"
 
 
     def __repr__(self):
