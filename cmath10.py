@@ -199,6 +199,18 @@ class CMath10:
             result = self.mul(i).add(one.sub(zz).sqrt()).log().div(i)
         return self.__class__(result)
 
+
+    def atan(self):
+        """ inverse tangent of a complex number """
+        with localcontext() as ctx:
+            ctx.prec += 2
+            i = self.__class__(0,1)
+            one = self.__class__(1,0)
+            two = self.__class__(2,0)
+            result = (one.sub(i.mul(self)).div(one.add(i.mul(self)))).log().mul(i).div(two)
+        return self.__class__(result)
+
+
     def exp(self):
         """ exp(a+bi) = exp(a)*(cos(b)+isin(b)) """
         with localcontext() as ctx:
