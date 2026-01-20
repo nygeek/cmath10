@@ -236,7 +236,7 @@ class Math10(Decimal):
                 if y > zero:
                     result = pi / 2
                 elif y < zero:
-                    result = -pi / 2
+                    result = -1 * cls(pi) / 2
                 else:
                     result = zero
 

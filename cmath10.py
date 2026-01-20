@@ -59,7 +59,7 @@ class CMath10:
             self.real = real.real
             self.imag = real.imag
             if imag is not None:
-                self.imag += self.scalar(imag)
+                self.imag += self.Scalar(imag)
         else:
             if imag is None:
                 imag = 0
@@ -294,7 +294,7 @@ class CMath10:
         """ argument """
         with localcontext() as ctx:
             ctx.prec += 2
-            result = atan2(self.imag, self.real)
+            result = self.Scalar.atan2(self.imag, self.real)
         return self.Scalar(result)
 
 

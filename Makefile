@@ -45,6 +45,7 @@ FILES = \
 	Makefile \
 	.gitattributes \
 	.gitignore \
+	pylintrc \
 	pyproject.toml \
 	pyvenv.cfg \
 	README.md
