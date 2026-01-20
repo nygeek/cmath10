@@ -267,6 +267,88 @@ class Math10(Decimal):
         return self.__class__(result)
 
 
+class StdLibAdapter:
+    """ functional forms for all of the Math10 (scalar) functions """
+    Static = Math10
+
+    @staticmethod
+    def isclose(z, rel_tol=1e-9, abs_tol=0.0):
+        """ functional form of isclose """
+        return self.isclose(z, rel_tol, abs_tol)
+
+
+    @staticmethod
+    def pi():
+        """ functional form of pi """
+        return Scalar.pi()
+
+
+    @staticmethod
+    def e():
+        """ functional form of e """
+        return Scalar.e()
+
+
+    @staticmethod
+    def cos(z):
+        """ functional form of cos """
+        return z.cos()
+
+
+    @staticmethod
+    def sin(z):
+        """ functional form of sin """
+        return z.sin()
+
+
+    @staticmethod
+    def tan(z):
+        """ functional form of tan """
+        return z.tan()
+
+
+    @staticmethod
+    def acos(z):
+        """ functional form of acos """
+        return z.acos()
+
+
+    @staticmethod
+    def asin(z):
+        """ functional form of asin """
+        return z.asin()
+
+
+    @staticmethod
+    def atan(z):
+        """ functional form of atan """
+        return z.atan()
+
+
+    @staticmethod
+    def atan2(y, x):
+        """ functional form of atan2 """
+        return Static.atan2(y, x)
+
+
+    @staticmethod
+    def cosh(z):
+        """ functional form of cosh """
+        return z.cosh()
+
+
+    @staticmethod
+    def sinh(z):
+        """ functional form of sinh """
+        return z.sinh()
+
+
+    @staticmethod
+    def tanh(z):
+        """ functional form of tanh """
+        return z.tanh()
+
+
 def main():
     """ simple smoke test """
     print("Smoke test is now in ssmoke.py.")

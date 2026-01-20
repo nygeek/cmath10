@@ -302,6 +302,8 @@ class CMath10:
 
 class StdLibAdapter:
     """ Make CMath10 (OO) look like cmath (functional)."""
+    Scalar = Math10
+
     @staticmethod
     def complex(real, imag=0):
         """ create a CMath10 complex number """
@@ -354,12 +356,12 @@ class StdLibAdapter:
     @staticmethod
     def e():
         """ functional form of pi """
-        return CMath10(Math10.e(), Decimal("0"))
+        return CMath10(Math10.e(), Math10("0"))
 
     @staticmethod
     def pi():
         """ functional form of pi """
-        return CMath10(Math10.pi(), Decimal("0"))
+        return CMath10(Math10.pi(), Math10("0"))
 
     @staticmethod
     def acos(z):

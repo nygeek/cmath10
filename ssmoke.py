@@ -17,7 +17,7 @@ from math10 import Math10
 class TestMath10Methods(unittest.TestCase):
 
     def test_pi(self):
-        self.assertTrue(isclose(Math10.pi(), Math10("3.14159265358979323846264338328")))
+        self.assertTrue(Math10.isclose(Math10.pi(), Math10("3.14159265358979323846264338328")))
 
 
 def main():
