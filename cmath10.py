@@ -14,7 +14,7 @@ Copyright (C) 2025 NYGeek LLC
 
 # ----- Python libraries ----- #
 import json
-from decimal import Decimal, getcontext, InvalidOperation
+from decimal import Decimal, getcontext, localcontext, InvalidOperation
 
 # ----- Local libraries ----- #
 # from trace_debug import DebugTrace
@@ -49,13 +49,22 @@ def isclose(a, b, rel_tol=1e-15, abs_tol=0.0):
 
 class CMath10:
     """ Class to implement the Complex Decimal Math machinery. """
+    Scalar = Math10
 
 
-    def __init__(self, real, imag, precision=32):
+    def __init__(self, real, imag=None, precision=32):
         """ Initialize a complex decimal. """
         # print(f"DEBUG CMath10(real: {real}, imag: {imag})")
-        self.real = Decimal(real)
-        self.imag = Decimal(imag)
+        if isinstance(real, CMath10):
+            self.real = real.real
+            self.imag = real.imag
+            if imag is not None:
+                self.imag += self.scalar(imag)
+        else:
+            if imag is None:
+                imag = 0
+            self.real = self.Scalar(real)
+            self.imag = self.Scalar(imag)
         self.precision = precision
         getcontext().prec = precision
 
@@ -92,10 +101,11 @@ class CMath10:
 
     def add(self, z):
         """ Implement self + b """
-        getcontext().prec += 2
-        _result = CMath10(self.real + z.real, self.imag + z.imag)
-        getcontext().prec -= 2
-        return _result
+        with localcontext() as ctx:
+            ctx.prec += 2
+            real = self.real + z.real
+            imag = self.imag + z.imag
+        return self.__class__(real, imag)
 
 
     def __add__(self, z):
@@ -104,10 +114,11 @@ class CMath10:
 
     def sub(self, z):
         """ Implement self - b """
-        getcontext().prec += 2
-        _result = CMath10(self.real - z.real, self.imag - z.imag)
-        getcontext().prec -= 2
-        return _result
+        with localcontext() as ctx:
+            ctx.prec += 2
+            real = self.real - z.real
+            imag = self.imag - z.imag
+        return self.__class__(real, imag)
 
 
     def __sub__(self, z):
@@ -116,12 +127,11 @@ class CMath10:
 
     def mul(self, z):
         """ Implement self * b """
-        getcontext().prec += 2
-        _real = (self.real * z.real) - (self.imag * z.imag)
-        _imag = (self.real * z.imag) + (self.imag * z.real)
-        _result = CMath10(_real, _imag)
-        getcontext().prec -= 2
-        return _result
+        with localcontext() as ctx:
+            ctx.prec += 2
+            real = (self.real * z.real) - (self.imag * z.imag)
+            imag = (self.real * z.imag) + (self.imag * z.real)
+        return self.__class__(real, imag)
 
 
     def __mul__(self, z):
@@ -130,13 +140,12 @@ class CMath10:
 
     def div(self, z):
         """ Implement self / b """
-        getcontext().prec += 2
-        _denominator = (z.real * z.real) + (z.imag * z.imag)
-        _real = ((self.real * z.real) + (self.imag * z.imag))/_denominator
-        _imag = ((self.imag * z.real) - (self.real * z.imag))/_denominator
-        _result = CMath10(_real, _imag)
-        getcontext().prec -= 2
-        return _result
+        with localcontext() as ctx:
+            ctx.prec += 2
+            denominator = (z.real * z.real) + (z.imag * z.imag)
+            real = ((self.real * z.real) + (self.imag * z.imag))/denominator
+            imag = ((self.imag * z.real) - (self.real * z.imag))/denominator
+        return self.__class__(real, imag)
 
 
     def __truediv__(self, z):
@@ -145,124 +154,136 @@ class CMath10:
 
 # ----- complex constants ----- #
 
-    @staticmethod
-    def pi():
+    @classmethod
+    def pi(cls):
         """ (pi, 0) """
-        return CMath10(Math10.pi(), Decimal("0"))
+        real = cls.Scalar.pi()
+        imag = cls.Scalar(0)
+        return cls(real, imag)
 
 
-    @staticmethod
-    def e():
+    @classmethod
+    def e(cls):
         """ (e, 0) """
-        return CMath10(Math10.e(), Decimal("0"))
+        real = cls.Scalar.e()
+        imag = cls.Scalar(0)
+        return cls(real, imag)
 
 
 # ----- complex higher math ----- #
 
     def abs(self):
         """ aka mag """
-        print(f"DEBUG abs(self: {self})")
+        # print(f"DEBUG abs(self: {self})")
         return CMath10(self.scalar_abs(), 0)
 
 
     def acos(self):
         """ inverse cosine of a complex number """
-        _zz = self.mul(self)
-        _i = CMath10(0,1)
-        _result = _zz.sub(CMath10(1,0)).sqrt().add(self).log().div(_i)
-        return _result
+        with localcontext() as ctx:
+            ctx.prec += 2
+            zz = self.mul(self)
+            i = self.__class__(0,1)
+            one = self.__class__(1,0)
+            result = zz.sub(one).sqrt().add(self).log().div(i)
+        return result
 
+
+    def asin(self):
+        """ inverse sine of a complex number """
+        with localcontext() as ctx:
+            ctx.prec += 2
+            zz = self.mul(self)
+            i = self.__class__(0,1)
+            one = self.__class__(1,0)
+            result = self.mul(i).add(one.sub(zz).sqrt()).log().div(i)
+        return self.__class__(result)
 
     def exp(self):
         """ exp(a+bi) = exp(a)*(cos(b)+isin(b)) """
-        getcontext().prec +=2
-        _mag = self.real.exp()
-        _real = _mag * Math10(self.imag).cos()
-        _imag = _mag * Math10(self.imag).sin()
-        getcontext().prec -=2
-        return CMath10(_real, _imag)
+        with localcontext() as ctx:
+            ctx.prec += 2
+            mag = self.Scalar(self.real).exp()
+            real = mag * self.Scalar(self.imag).cos()
+            imag = mag * self.Scalar(self.imag).sin()
+        return self.__class__(real, imag)
 
 
     def log(self):
         """ natural logarithm of z """
         # note: in cmath log is natural log, log10 is decimal log
         # note: in decimal.py ln is natural log
-        _real = self.scalar_abs().ln() # this calls decimal.py ln
-        _imag = Math10.atan2(self.imag, self.real)
-        return CMath10(_real, _imag)
+        real = self.Scalar(self.scalar_abs()).ln() # this calls decimal.py ln
+        imag = self.Scalar.atan2(self.imag, self.real)
+        return self.__class__(real, imag)
 
 
     def log10(self):
-        """ natural logarithm of z """
+        """ decimal logarithm of z """
         # note: in cmath log is natural log, log10 is decimal log
         # note: in decimal.py ln is natural log
-        return self.log().div(CMath10(10,0).log())
+        return self.log().div(self.__class__(10,0).log())
 
 
     def phase(self):
         """ phase of z, aka arg z """
-        return CMath10(Math10.atan2(self.real, self.imag), Decimal(0))
+        return self.__class__(self.Scalar.atan2(self.real, self.imag), self.Scalar(0))
 
 
     def sqrt(self):
         """ square root of z """
         # Principal square root.  There is another, of course
-        getcontext().prec +=2
-        _r = self.scalar_abs()
-        _sign = 1 if self.imag >= 0 else -1
-        _result = CMath10(((_r + self.real)/2).sqrt(),
-                          _sign * ((_r - self.real)/2).sqrt())
-        getcontext().prec -=2
-        return _result
+        with localcontext() as ctx:
+            ctx.prec += 2
+            r = self.scalar_abs()
+            sign = 1 if self.imag >= 0 else -1
+        return self.__class__(((r + self.real)/2).sqrt(), sign * ((r - self.real)/2).sqrt())
 
 
     def cos(self):
         """ complex cosine """
-        getcontext().prec += 2
-        _real = Math10(self.real).cos() * Math10(self.imag).cosh()
-        _imag = Math10(self.real).sin() * Math10(self.imag).sinh()
-        _imag = Decimal("-1") * _imag
-        _result = CMath10(_real, _imag)
-        getcontext().prec -= 2
-        return _result
+        with localcontext() as ctx:
+            ctx.prec += 2
+            real = self.Scalar(self.real).cos() * self.Scalar(self.imag).cosh()
+            imag = -1 * (self.Scalar(self.real).sin() * self.Scalar(self.imag).sinh())
+        return self.__class__(real, imag)
 
 
     def sin(self):
         """ complex sine """
-        getcontext().prec += 2
-        _real = Math10(self.real).sin() * Math10(self.imag).cosh()
-        _imag = Math10(self.real).cos() * Math10(self.imag).sinh()
-        _result = CMath10(_real, _imag)
-        getcontext().prec -= 2
-        return _result
+        with localcontext() as ctx:
+            ctx.prec += 2
+            real = self.Scalar(self.real).sin() * self.Scalar(self.imag).cosh()
+            imag = self.Scalar(self.real).cos() * self.Scalar(self.imag).sinh()
+        return self.__class__(real, imag)
 
 
     def tan(self):
         """ complex tangent """
-        getcontext().prec += 2
-        _num = self.sin()
-        _den = self.cos()
-        _result = _num.div(_den)
-        getcontext().prec -= 2
-        return _result
+        with localcontext() as ctx:
+            ctx.prec += 2
+            num = self.sin()
+            den = self.cos()
+            result = num.div(den)
+        return self.__class__(result)
 
 
 # ----- scalar result on complex numbers ----- #
 
     def scalar_abs(self):
         """ aka mag """
-        getcontext().prec +=2
-        _result = (self.real * self.real + self.imag * self.imag).sqrt()
-        getcontext().prec -=2
-        return _result
+        with localcontext() as ctx:
+            ctx.prec += 2
+            result = self.Scalar(self.real * self.real + self.imag * self.imag).sqrt()
+        return result
 
 
     def scalar_arg(self):
         """ argument """
-        getcontext().prec +=2
-        _result = Math10.atan2(self.imag, self.real)
-        getcontext().prec -=2
-        return _result
+        with localcontext() as ctx:
+            ctx.prec += 2
+            result = atan2(self.imag, self.real)
+        return self.Scalar(result)
 
 
 # ----- StdLibAdapter class ----- #
@@ -283,7 +304,7 @@ class StdLibAdapter:
     def abs(z):
         """ functional form of abs """
         # This is a complex result.  Should we return .real()?
-        print(f"DEBUG StdLibAdapter: abs(z): {z}")
+        # print(f"DEBUG StdLibAdapter: abs(z): {z}")
         return z.abs()
 
     @staticmethod

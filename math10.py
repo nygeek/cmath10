@@ -226,12 +226,12 @@ class Math10(Decimal):
 
             if x > zero:
                 # quadrants 1 and 4
-                result = (y / x).atan()
+                result = cls(y / x).atan()
             elif x < zero:
                 if y >= zero:
-                    result = (y / x).atan() + pi
+                    result = cls(y / x).atan() + pi
                 else:
-                    result = (y / x).atan() - pi
+                    result = cls(y / x).atan() - pi
             else:
                 if y > zero:
                     result = pi / 2
