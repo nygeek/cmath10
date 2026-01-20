@@ -35,10 +35,6 @@ def decimal_decoder(dct):
     return dct
 
 
-# ----- ----- Scalar functions ----- ----- #
-
-# ----- scalar constants ----- #
-
 class Math10(Decimal):
     """ Class to implement trig and other math functions using
         decimal.py numbers. """
@@ -69,7 +65,6 @@ class Math10(Decimal):
     def e():
         """ return e """
         return Decimal('1').exp()
-
 
 # ----- trigonometric functions ----- #
 
@@ -180,7 +175,7 @@ class Math10(Decimal):
         result = _x
         i = 1
         while True:
-            power *= -_x * _x
+            power *= -1 * _x * _x
             term = power / (2 * i + 1)
             if abs(term) < Decimal(10) ** -(getcontext().prec - 2):
                 break
@@ -207,24 +202,24 @@ class Math10(Decimal):
     def cosh(self):
         """ hyperbolic cosine """
         getcontext().prec += 2
-        _result = (self.exp() + (-self).exp()) / 2
-        getcontext().prec -=2
+        _result = (self.exp() + (-1 * self).exp()) / 2
+        getcontext().prec -= 2
         return Math10(_result)
 
 
     def sinh(self):
         """ hyperbolic sine """
         getcontext().prec += 2
-        _result = (self.exp() - (-self).exp()) / 2
-        getcontext().prec -=2
+        _result = (self.exp() - (-1 * self).exp()) / 2
+        getcontext().prec -= 2
         return Math10(_result)
 
 
     def tanh(self):
         """ hyperbolic sine """
         getcontext().prec += 2
-        _result = (self.sinh() - (-self).cosh()) / 2
-        getcontext().prec -=2
+        _result = self.sinh() / self.cosh()
+        getcontext().prec -= 2
         return Math10(_result)
 
 

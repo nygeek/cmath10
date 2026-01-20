@@ -7,12 +7,11 @@ Copyright (C) 2025 NYGeek LLC
 """
 
 # ----- Python libraries ----- #
-import json
-from decimal import Decimal, getcontext, InvalidOperation
-from math10 import Math10
+from decimal import Decimal
 
 # ----- Local libraries ----- #
 from trace_debug import DebugTrace
+from math10 import Math10
 
 def main():
     """ simple smoke test """

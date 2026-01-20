@@ -15,10 +15,10 @@ Copyright (C) 2025 NYGeek LLC
 # ----- Python libraries ----- #
 import json
 from decimal import Decimal, getcontext, InvalidOperation
-from math10 import Math10
 
 # ----- Local libraries ----- #
-from trace_debug import DebugTrace
+# from trace_debug import DebugTrace
+from math10 import Math10
 
 # ----- JSON Encoder for Decimal ----- #
 
@@ -41,6 +41,8 @@ def decimal_decoder(dct):
     return dct
 
 def isclose(a, b, rel_tol=1e-15, abs_tol=0.0):
+    """ True if a and b are close """
+    # functional wrapper for OO original
     return a.isclose(b, rel_tol, abs_tol)
 
 # ----- Main CMath10 class ----- #
@@ -60,7 +62,7 @@ class CMath10:
 
     def __str__(self):
         """ return a string representation of the number """
-        sgn = "+" if self.imag >= 0 else "-"
+        sgn = "+" if self.imag >= 0 else ""
         tol = Decimal(10) ** -self.precision
         _real = 0 if abs(self.real) < tol else self.real
         _imag = 0 if abs(self.imag) < tol else self.imag
@@ -73,11 +75,14 @@ class CMath10:
 
 
     def copy(self):
+        """ return a clone of this item """
         return CMath10(self.real, self.imag)
 
 
-    def isclose(self, z, rel_tol=1e-15, abs_tol=0.0):
-        return True if self.sub(z).scalar_abs() < err else False
+    def isclose(self, z, rel_tol=1e-15):
+        """ are two numbers close? """
+        tol = min(Decimal(10) ** -self.precision, rel_tol)
+        return self.sub(z).scalar_abs() < tol
 
 
 # ----- Basic complex arithmetic ----- #
@@ -202,7 +207,7 @@ class CMath10:
         getcontext().prec +=2
         _r = self.scalar_abs()
         _sign = 1 if self.imag >= 0 else -1
-        _result = CMath10(((_r + self.real)/2).sqrt(), 
+        _result = CMath10(((_r + self.real)/2).sqrt(),
                           _sign * ((_r - self.real)/2).sqrt())
         getcontext().prec -=2
         return _result
