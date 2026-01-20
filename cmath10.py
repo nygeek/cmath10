@@ -79,10 +79,13 @@ class CMath10:
         return CMath10(self.real, self.imag)
 
 
-    def isclose(self, z, rel_tol=1e-15):
+    def isclose(self, z, rel_tol=1e-9, abs_tol=0.0):
         """ are two numbers close? """
-        tol = min(Decimal(10) ** -self.precision, rel_tol)
-        return self.sub(z).scalar_abs() < tol
+        if self == z:
+            return True
+        diff = abs(self-z)
+        ref = max(self.abs(), z.abs())
+        return diff <= max(rel_tol * ref, abs_tol)
 
 
 # ----- Basic complex arithmetic ----- #

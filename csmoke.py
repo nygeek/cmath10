@@ -7,34 +7,47 @@ Copyright (C) 2025 NYGeek LLC
 """
 
 # ----- Python libraries ----- #
-# import json
+import unittest
 
 # ----- Local libraries ----- #
 from trace_debug import DebugTrace
 from cmath10 import CMath10
 from math10 import Math10
 
+class TestCMathMethods(unittest.TestCase):
 
-def main():
+    def test_add(self):
+        """ test complex addition """
+        a = CMath10("1", "3")
+        b = CMath10("2.1", "7.9")
+        self.assertEqual(a.add(b), CMath10("3.1", "10.9"))
+
+
+    def test_sub(self):
+        """ test complex subtraction """
+        a = CMath10("1", "3")
+        b = CMath10("2.1", "7.9")
+        self.assertEqual(a.sub(b), CMath10("-1.1", "-4.9"))
+
+
+    def test_mul(self):
+        """ test complex subtraction """
+        a = CMath10("1", "3")
+        b = CMath10("2.1", "7.9")
+        self.assertEqual(a.mul(b), CMath10("-21.6", "14.2"))
+
+
+    def test_div(self):
+        """ test complex subtraction """
+        a = CMath10("1", "3")
+        b = CMath10("2.1", "7.9")
+        self.assertEqual(a.div(b),
+                         CMath10("0.3861119425321759952110146662675846", \
+                                 "-0.02394492666866207722238850643519904"))
+
+def oldmain():
     """ simple smoke test """
     DebugTrace(False)
-
-    z = CMath10("1", "2")
-    print(f"Z: {z}\n")
-
-    a = CMath10("1", "3")
-    b = CMath10("2.1", "7.9")
-    print(f"a: {a}")
-    print(f"b: {b}\n")
-
-    a.add(b)
-    print(f"a + b: {a}")
-    a = CMath10("1", "3")
-    a.sub(b)
-    print(f"a - b: {a}")
-    a = CMath10("1", "3")
-    a.mul(b)
-    print(f"a * b: {a}\n")
 
     a = CMath10("1", "1")
     b = CMath10("1", "-1")
@@ -121,4 +134,4 @@ def main():
 
 
 if __name__ == '__main__':
-    main()
+    unittest.main()

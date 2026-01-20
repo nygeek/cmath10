@@ -12,7 +12,7 @@ Copyright (C) 2025 NYGeek LLC
 
 # ----- Python libraries ----- #
 import json
-from decimal import Decimal, getcontext, InvalidOperation
+from decimal import Decimal, localcontext, InvalidOperation
 
 # ----- JSON Encoder for Decimal ----- #
 
@@ -44,78 +44,99 @@ class Math10(Decimal):
         self.rel_tol = rel_tol
 
 
-    @staticmethod
-    def pi():
+    def isclose(self, z, rel_tol=1e-9, abs_tol=0.0):
+        """ Implement isclose according to PEP 485 """
+        if self == z:
+            return True
+        if self.is_nan() or z.is_nan():
+            return False
+        if self.is_infinite() or z.is_infinite():
+            return False
+        diff = abs(self - z)
+        ref = max(abs(self), abs(z))
+        allowed = max(rel_tol * ref, abs_tol)
+        return diff <= allowed
+
+
+    @classmethod
+    def pi(cls):
         """ return pi """
         # docs.python.org/3/library/decimal.html#recipes
-        getcontext().prec += 2
-        three = Decimal(3)
-        lasts, t, s, n, na, d, da = 0, three, 3, 1, 0, 0, 24
-        while s != lasts:
-            lasts = s
-            n, na = n+na, na+8
-            d, da = d+da, da+32
-            t = (t * n) / d
-            s += t
-        getcontext().prec -= 2
-        return +s
+        with localcontext() as ctx:
+            ctx.prec += 2
+            three = Decimal(3)
+            lasts, t, s, n, na, d, da = 0, three, 3, 1, 0, 0, 24
+            while s != lasts:
+                lasts = s
+                n, na = n+na, na+8
+                d, da = d+da, da+32
+                t = (t * n) / d
+                s += t
+        return cls(+s)
 
 
-    @staticmethod
-    def e():
+    @classmethod
+    def e(cls):
         """ return e """
-        return Decimal('1').exp()
+        return cls('1').exp()
 
 # ----- trigonometric functions ----- #
 
     def cos(self):
         """ return cosine """
         # from docs.python.org/3/library/decimal.html#recipes.
-        _twopi = 2 * Math10.pi()
-        _x = self
-        if ((_x > _twopi) or (_x < -_twopi)):
-            _x %= _twopi
-        getcontext().prec += 2
-        i, lasts, s, fact, num, sign = 0, 0, 1, 1, 1, 1
-        while s != lasts:
-            lasts = s
-            i += 2
-            fact *= i * (i-1)
-            num *= _x * _x
-            sign *= -1
-            s += num / fact * sign
-        getcontext().prec -= 2
-        return +s
+        with localcontext() as ctx:
+            ctx.prec += 2
+
+            twopi = 2 * self.pi()
+            x = self
+
+            if ((x > twopi) or (x < -twopi)):
+                x %= twopi
+
+            i, lasts, s, fact, num, sign = 0, 0, 1, 1, 1, 1
+            while s != lasts:
+                lasts = s
+                i += 2
+                fact *= i * (i-1)
+                num *= x * x
+                sign *= -1
+                s += num / fact * sign
+
+        return self.__class__(+s)
 
 
     def sin(self):
         """ return sin """
         # from docs.python.org/3/library/decimal.html#recipes
-        getcontext().prec += 2
-        _twopi = 2 * Math10.pi()
-        _x = self
-        if ((_x > _twopi) or (_x < -_twopi)):
-            _x %= _twopi
-        i, lasts, s, fact, num, sign = 1, 0, _x, 1, _x, 1
-        while s != lasts:
-            lasts = s
-            i += 2
-            fact *= i * (i-1)
-            num *= _x * _x
-            sign *= -1
-            s += num / fact * sign
-        getcontext().prec -= 2
-        return +s
+        with localcontext() as ctx:
+            ctx.prec += 2
+
+            twopi = 2 * Math10.pi()
+            x = self
+            if ((x > twopi) or (x < -twopi)):
+                x %= twopi
+            i, lasts, s, fact, num, sign = 1, 0, x, 1, x, 1
+            while s != lasts:
+                lasts = s
+                i += 2
+                fact *= i * (i-1)
+                num *= x * x
+                sign *= -1
+                s += num / fact * sign
+
+        return self.__class__(+s)
 
 
     def tan(self):
         """ sin(x) / cos(x) """
-        return Math10(Math10(self).sin() / Math10(self).cos())
+        return self.__class__(self.sin() / self.cos())
 
 
     def acos(self):
         """ inverse cosine """
-        return (Math10.pi() / 2) - self.asin()
+        result = (self.pi() / 2) - self.asin()
+        return self.__class__(result)
 
 
     def asin(self):
@@ -125,28 +146,30 @@ class Math10(Decimal):
             arcsin(x) = x + (1/2)(x^3/3) + (1*3)/(2*4)(x^5/5)
                 + (1*3*5)/(2*4*6)(x^7/7) + ...
             """
-        getcontext().prec += 2
-        _x = self
-        if abs(_x) > 1:
-            raise ValueError("arcsin(x) requires |x| <= 1")
-        if abs(_x) > Decimal('0.7'):
-            sign = 1 if _x >= 0 else -1
-            result = Math10.pi() / 2 - \
-                Math10((1 - _x*_x).sqrt()).asin() * sign
-            getcontext().prec -= 2
-            return Math10(+result)
-        power = _x
-        result = _x
-        i = 1
-        while True:
-            power *= _x * _x * (2*i - 1) * (2*i - 1) / ((2*i) * (2*i + 1))
-            term = power
-            if abs(term) < Decimal(10) ** -(getcontext().prec - 2):
-                break
-            result += term
-            i += 1
-        getcontext().prec -= 2
-        return Math10(+result)
+        with localcontext() as ctx:
+            cutoff = Decimal(10) ** -ctx.prec
+            ctx.prec += 2
+
+            x = self
+            if abs(x) > 1:
+                raise ValueError("arcsin(x) requires |x| <= 1")
+            if abs(x) > Decimal('0.7'):
+                sign = 1 if x >= 0 else -1
+                result = self.pi() / 2 - \
+                    self.__class__((1 - x*x).sqrt()).asin() * sign
+                return self.__class__(+result)
+            power = x
+            result = x
+            i = 1
+            while True:
+                power *= x * x * (2*i - 1) * (2*i - 1) / ((2*i) * (2*i + 1))
+                term = power
+                if abs(term) < cutoff:
+                    break
+                result += term
+                i += 1
+
+        return self.__class__(+result)
 
 
     def atan(self):
@@ -155,72 +178,93 @@ class Math10(Decimal):
         For |x| > 1, use atan(x) = pi/2 - atan(1/x) for x > 0
                            or = -pi/2 - atan(1/x) for x < 0
         """
-        getcontext().prec += 2
-        _x = self
-        # For |x| > 1, use the identity to improve convergence
-        if abs(_x) > 1:
-            sign = 1 if _x >= 0 else -1
-            result = sign * Math10.pi() / 2 - Math10(1/_x).atan()
-            getcontext().prec -= 2
-            return Math10(+result)
-        # For values close to 1, use atan(x) =
-        #   pi/4 + atan((x-1)/(x+1)) to improve convergence
-        if abs(_x) > Decimal('0.5'):
-            result = Math10.pi() / 4
-            if _x + 1 != 0:
-                result += Math10((_x-1)/(_x+1)).atan()
-            getcontext().prec -= 2
-            return Math10(+result)
-        power = _x
-        result = _x
-        i = 1
-        while True:
-            power *= -1 * _x * _x
-            term = power / (2 * i + 1)
-            if abs(term) < Decimal(10) ** -(getcontext().prec - 2):
-                break
-            result += term
-            i += 1
-        getcontext().prec -= 2
-        return Math10(+result)
+        with localcontext() as ctx:
+            cutoff = Decimal(10) ** -ctx.prec
+            ctx.prec += 2
+
+            x = self
+
+            # For |x| > 1, use the identity to improve convergence
+            if abs(x) > 1:
+                sign = 1 if x >= 0 else -1
+                result = sign * self.__class__.pi() / 2 - self.__class__(1/x).atan()
+                return self.__class__(+result)
+
+            # For values close to 1, use atan(x) =
+            #   pi/4 + atan((x-1)/(x+1)) to improve convergence
+            if abs(x) > Decimal('0.5'):
+                result = self.__class__.pi() / 4
+                if x + 1 != 0:
+                    result += self.__class__((x-1)/(x+1)).atan()
+                return self.__class__(+result)
+
+            power = x
+            result = x
+            i = 1
+            while True:
+                power *= -1 * x * x
+                term = power / (2 * i + 1)
+                if abs(term) < cutoff:
+                    break
+                result += term
+                i += 1
+
+        return self.__class__(+result)
 
 
-    @staticmethod
-    def atan2(x, y):
-        """ inverse tangent x / y, with sign of y """
-        getcontext().prec += 2
-        _sign = 1 if y >= 0 else -1
-        if y != 0:
-            _ratio = x / y
-            _result = _sign * Math10(_ratio).atan()
-        else:
-            _result = Math10.pi() / 2
-        getcontext().prec -= 2
-        return Math10(_result)
+    @classmethod
+    def atan2(cls, y, x):
+        """ inverse tangent y/x in radians """
+        y = cls(y)
+        x = cls(x)
+
+        with localcontext() as ctx:
+            ctx.prec += 2
+
+            pi = cls.pi()
+            zero = cls(0)
+
+            if x > zero:
+                # quadrants 1 and 4
+                result = (y / x).atan()
+            elif x < zero:
+                if y >= zero:
+                    result = (y / x).atan() + pi
+                else:
+                    result = (y / x).atan() - pi
+            else:
+                if y > zero:
+                    result = pi / 2
+                elif y < zero:
+                    result = -pi / 2
+                else:
+                    result = zero
+
+        return cls(result)
 
 
     def cosh(self):
         """ hyperbolic cosine """
-        getcontext().prec += 2
-        _result = (self.exp() + (-1 * self).exp()) / 2
-        getcontext().prec -= 2
-        return Math10(_result)
+        with localcontext() as ctx:
+            ctx.prec += 2
+            result = (self.exp() + (-1 * self).exp()) / 2
+        return self.__class__(result)
 
 
     def sinh(self):
         """ hyperbolic sine """
-        getcontext().prec += 2
-        _result = (self.exp() - (-1 * self).exp()) / 2
-        getcontext().prec -= 2
-        return Math10(_result)
+        with localcontext() as ctx:
+            ctx.prec += 2
+            result = (self.exp() - (-1 * self).exp()) / 2
+        return self.__class__(result)
 
 
     def tanh(self):
         """ hyperbolic sine """
-        getcontext().prec += 2
-        _result = self.sinh() / self.cosh()
-        getcontext().prec -= 2
-        return Math10(_result)
+        with localcontext() as ctx:
+            ctx.prec += 2
+            result = self.sinh() / self.cosh()
+        return self.__class__(result)
 
 
 def main():

@@ -8,10 +8,17 @@ Copyright (C) 2025 NYGeek LLC
 
 # ----- Python libraries ----- #
 from decimal import Decimal
+import unittest
 
 # ----- Local libraries ----- #
 from trace_debug import DebugTrace
 from math10 import Math10
+
+class TestMath10Methods(unittest.TestCase):
+
+    def test_pi(self):
+        self.assertTrue(isclose(Math10.pi(), Math10("3.14159265358979323846264338328")))
+
 
 def main():
     """ simple smoke test """
@@ -49,4 +56,4 @@ def main():
 
 
 if __name__ == '__main__':
-    main()
+    unittest.main()
