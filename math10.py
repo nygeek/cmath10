@@ -54,7 +54,7 @@ class Math10(Decimal):
             return False
         diff = abs(self - z)
         ref = max(abs(self), abs(z))
-        allowed = max(rel_tol * ref, abs_tol)
+        allowed = max(Math10(rel_tol) * Math10(ref), Math10(abs_tol))
         return diff <= allowed
 
 
@@ -269,7 +269,7 @@ class Math10(Decimal):
 
 class StdLibAdapter:
     """ functional forms for all of the Math10 (scalar) functions """
-    Static = Math10
+    Scalar = Math10
 
     @staticmethod
     def isclose(z, rel_tol=1e-9, abs_tol=0.0):
@@ -280,13 +280,13 @@ class StdLibAdapter:
     @staticmethod
     def pi():
         """ functional form of pi """
-        return Scalar.pi()
+        return Math10.pi()
 
 
     @staticmethod
     def e():
         """ functional form of e """
-        return Scalar.e()
+        return Math10.e()
 
 
     @staticmethod

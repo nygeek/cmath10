@@ -12,48 +12,83 @@ import unittest
 
 # ----- Local libraries ----- #
 from trace_debug import DebugTrace
-from math10 import Math10
+from math10 import StdLibAdapter as m
 
 class TestMath10Methods(unittest.TestCase):
 
     def test_pi(self):
-        self.assertTrue(Math10.isclose(Math10.pi(), Math10("3.14159265358979323846264338328")))
+        self.assertTrue(
+                m.Scalar.isclose(m.pi(), 
+                       m.Scalar("3.14159265358979323846264338328")))
 
+    def test_e(self):
+        self.assertTrue(
+                m.Scalar.isclose(
+                    m.e(),
+                    m.Scalar("2.7182818284590452353602874713527")))
 
-def main():
-    """ simple smoke test """
-    DebugTrace(False)
-    # DebugTrace(True)
-    pi = Math10.pi()
-    print(f"pi: {pi}")
+    def test_pi_on_four(self):
+        self.assertTrue(
+                m.Scalar.isclose(
+                    m.pi() / m.Scalar("4"),
+                    m.Scalar("0.785398163397448309615660845819875")))
 
-    pionfour = pi / Decimal('4')
-    print(f"\npi/4: {pionfour}\n")
+    def test_cos_pi_on_four(self):
+        x = m.Scalar(m.pi() / m.Scalar("4"))
+        self.assertTrue(
+                m.Scalar.isclose(
+                    x.cos(),
+                    m.Scalar("0.7071067811865475244008443621048495")))
 
-    x = Math10.sin(pionfour)
-    print(f"sin(pi/4): {x}")
+    def test_tan_pi_on_four(self):
+        x = m.Scalar(m.pi() / m.Scalar("4"))
+        self.assertTrue(
+                m.Scalar.isclose(
+                    x.tan(),
+                    m.Scalar("1")))
 
-    x = Math10.cos(pionfour)
-    print(f"\ncos(pi/4): {x}")
+    # Just to see if it works, I'm using the cnc result for
+    # the isclose value.  It works with the default test tolerances
+    def test_pi_on_five(self):
+        self.assertTrue(
+                m.Scalar.isclose(
+                    m.pi() / m.Scalar("5"),
+                    m.Scalar("0.6283185307179586")))
 
-    x = Math10.tan(pionfour)
-    print(f"\ntan(pi/4): {x}")
+    def test_sin_pi_on_five(self):
+        x = m.Scalar(m.pi() / m.Scalar("5"))
+        self.assertTrue(
+                m.Scalar.isclose(
+                    x.sin(),
+                    m.Scalar("0.5877852522924731")))
 
-    pionfive = pi / 5
-    print(f"\npi/5: {pionfive}\n")
+    def test_sin_asin_pi_on_five(self):
+        x = m.Scalar(m.pi() / m.Scalar("5"))
+        self.assertTrue(
+                m.Scalar.isclose(
+                    x.sin().asin(),
+                    m.Scalar("0.6283185307179586")))
 
-    z = Math10.sin(pionfive)
-    print(f"sin(pi/5): {z}")
-    print(f"asin(sin(pi/5)): {Math10(z).asin()}\n")
+    def test_cos_acos_pi_on_five(self):
+        x = m.Scalar(m.pi() / m.Scalar("5"))
+        self.assertTrue(
+                m.Scalar.isclose(
+                    x.cos().acos(),
+                    m.Scalar("0.6283185307179586")))
 
-    z = Math10.cos(pionfive)
-    print(f"cos(pi/5): {z}")
-    print(f"acos(cos(pi/5)): {Math10(z).acos()}\n")
+    def test_tan_pi_on_five(self):
+        x = m.Scalar(m.pi() / m.Scalar("5"))
+        self.assertTrue(
+                m.Scalar.isclose(
+                    x.tan(),
+                    m.Scalar("0.7265425280053609")))
 
-    z = Math10.tan(pionfive)
-    print(f"tan(pi/5): {z}")
-    print(f"atan(tan(pi/5)): {Math10(z).atan()}\n")
-
+    def test_sin_asin_pi_on_five(self):
+        x = m.Scalar(m.pi() / m.Scalar("5"))
+        self.assertTrue(
+                m.Scalar.isclose(
+                    x.tan().atan(),
+                    m.Scalar("0.6283185307179586")))
 
 if __name__ == '__main__':
     unittest.main()
