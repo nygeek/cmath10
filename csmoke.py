@@ -49,31 +49,32 @@ class TestCMathMethods(unittest.TestCase):
 
     def test_euler(self):
         """ test Euler's Identity """
+        zero = cm(0, 0)
+        one = cm(1,0)
         i = cm(0,1)
         pi = cm.pi()
-        ipi = i.mul(pi)
-        zero = cm(0, 0)
-        print(f"test_euler: i: {i}, pi: {pi}, ipi: {ipi}")
-        ee = ipi.exp()
-        eep1 = ee.add(cm(1,0))
-        print(f"test_euler: ee: {ee}, eep1: {eep1}, zero: {zero}")
-        self.assertTrue(cm.isclose(eep1, zero))
+        res = i.mul(pi).exp().add(one)
+        self.assertTrue(cm.isclose(res, zero, abs_tol = 1e-15))
 
+    def test_phase_1(self):
+        """ phase(1,1) """
+        expected = cm(0.7853981633974483096, 0)
+        actual = cm(1,1).phase()
+        print(f"test_phase_1: actual {actual}")
+        print(f"test_phase_1: expected {expected}")
+        self.assertTrue(cm.isclose(actual, expected, abs_tol=1e-15))
+
+    def test_phase_2(self):
+        """ phase(1,-1) """
+        expected = cm(-0.7853981633974483096, 0)
+        actual = cm(1,-1).phase()
+        print(f"test_phase_2: actual {actual}")
+        print(f"test_phase_2: expected {expected}")
+        self.assertTrue(cm.isclose(actual, expected, abs_tol=1e-15))
 
 def oldmain():
     """ simple smoke test """
     DebugTrace(False)
-
-    a = CMath10("1", "1")
-    b = CMath10("1", "-1")
-    print(f"a: {a}")
-    print(f"b: {b}")
-    a.div(b)
-    print(f"a / b: {a}\n")
-
-    z = CMath10(0,Math10.pi())
-    z = z.exp()
-    print(f"e^(pi*i): {z}\n")
 
     z = CMath10("1", "1")
     print(f"phase(z: {z}): {z.phase()}")

@@ -235,7 +235,7 @@ class CMath10:
 
     def phase(self):
         """ phase of z, aka arg z """
-        return self.__class__(self.Scalar.atan2(self.real, self.imag), self.Scalar(0))
+        return self.__class__(self.Scalar.atan2(self.imag, self.real), self.Scalar(0))
 
 
     def sqrt(self):

@@ -232,7 +232,7 @@ class Math10(Decimal):
                     result = cls(y / x).atan() + pi
                 else:
                     result = cls(y / x).atan() - pi
-            else:
+            else: # x is zero
                 if y > zero:
                     result = pi / 2
                 elif y < zero:
@@ -325,10 +325,10 @@ class StdLibAdapter:
         return z.atan()
 
 
-    @staticmethod
-    def atan2(y, x):
-        """ functional form of atan2 """
-        return Static.atan2(y, x)
+    # @staticmethod
+    # def atan2(y, x):
+    #     """ functional form of atan2 """
+    #     return Static.atan2(y, x)
 
 
     @staticmethod
