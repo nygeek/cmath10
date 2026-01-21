@@ -2,14 +2,15 @@
 
 This repository represents the development environment for the
 cmath10.py module.  This module is an adjunct to the decimal.py
-module.
+module.  It also contains the math10.py module.
 
 The decimal.py module provides basic arithmetic machinery for
 arbitrary-length numbers with underlying representation in
 decimal.  This representation, wasteful in many contexts, is
 useful in accounting situations and in some other circumstances.
 
-For reference, check the decimal.py documentation at https://docs.python.org/3/library/decimal.html
+For reference, check the decimal.py documentation at
+https://docs.python.org/3/library/decimal.html
 
 ## Complex decimal
 
@@ -33,7 +34,7 @@ I first started thinking about building a complex calculator based
 on the HP35 calculator when I graduated from college.  Recently I
 decided to implement it.
 
-Beyond the HP-35, I encountered George Stibitz late in his career.
+Beyond the HP35, I encountered George Stibitz late in his career.
 He had built a complex number calculator at Bell Labs, an accomplishment
 that was particularly remarkable given that the whole thing was
 implemented in electromechanical relays.
@@ -54,8 +55,8 @@ ENTER +.
 
 ## CHANGELOG
 
-Moved smoke test from cmath10.py main() to a separate file,
-smoke.py
+Moved smoke test from cmath10.py main() to a separate file, csmoke.py
+(complex) and the smoke test for math10.py to ssmoke.py (scalar)
 
 ## NEWS
 
