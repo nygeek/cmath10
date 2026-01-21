@@ -11,39 +11,54 @@ import unittest
 
 # ----- Local libraries ----- #
 from trace_debug import DebugTrace
-from cmath10 import CMath10
-from math10 import Math10
+from cmath10 import CMath10 as cm
 
 class TestCMathMethods(unittest.TestCase):
 
     def test_add(self):
         """ test complex addition """
-        a = CMath10("1", "3")
-        b = CMath10("2.1", "7.9")
-        self.assertEqual(a.add(b), CMath10("3.1", "10.9"))
-
+        a = cm("1", "3")
+        b = cm("2.1", "7.9")
+        self.assertTrue(cm.isclose(a.add(b), cm("3.1", "10.9")))
 
     def test_sub(self):
         """ test complex subtraction """
-        a = CMath10("1", "3")
-        b = CMath10("2.1", "7.9")
-        self.assertEqual(a.sub(b), CMath10("-1.1", "-4.9"))
-
+        a = cm("1", "3")
+        b = cm("2.1", "7.9")
+        self.assertTrue(cm.isclose(a.sub(b), cm("-1.1", "-4.9")))
 
     def test_mul(self):
-        """ test complex subtraction """
-        a = CMath10("1", "3")
-        b = CMath10("2.1", "7.9")
-        self.assertEqual(a.mul(b), CMath10("-21.6", "14.2"))
+        """ test complex multiplication """
+        a = cm("1", "3")
+        b = cm("2.1", "7.9")
+        self.assertTrue(cm.isclose(a.mul(b), cm("-21.6", "14.2")))
 
+    def test_div_1(self):
+        """ test complex division 1 """
+        a = cm("1", "3")
+        b = cm("2.1", "7.9")
+        self.assertTrue(cm.isclose(a.div(b),
+                         cm("0.3861119425321759952110146662675846", \
+                            "-0.02394492666866207722238850643519904")))
 
-    def test_div(self):
-        """ test complex subtraction """
-        a = CMath10("1", "3")
-        b = CMath10("2.1", "7.9")
-        self.assertEqual(a.div(b),
-                         CMath10("0.3861119425321759952110146662675846", \
-                                 "-0.02394492666866207722238850643519904"))
+    def test_div_2(self):
+        """ test complex division 2 """
+        a = cm("1", "1")
+        b = cm("1", "-1")
+        self.assertTrue(cm.isclose(a.div(b), cm("0","1")))
+
+    def test_euler(self):
+        """ test Euler's Identity """
+        i = cm(0,1)
+        pi = cm.pi()
+        ipi = i.mul(pi)
+        zero = cm(0, 0)
+        print(f"test_euler: i: {i}, pi: {pi}, ipi: {ipi}")
+        ee = ipi.exp()
+        eep1 = ee.add(cm(1,0))
+        print(f"test_euler: ee: {ee}, eep1: {eep1}, zero: {zero}")
+        self.assertTrue(cm.isclose(eep1, zero))
+
 
 def oldmain():
     """ simple smoke test """

@@ -40,11 +40,6 @@ def decimal_decoder(dct):
                 pass
     return dct
 
-def isclose(a, b, rel_tol=1e-15, abs_tol=0.0):
-    """ True if a and b are close """
-    # functional wrapper for OO original
-    return a.isclose(b, rel_tol, abs_tol)
-
 # ----- Main CMath10 class ----- #
 
 class CMath10:
@@ -92,10 +87,17 @@ class CMath10:
         """ are two numbers close? """
         if self == z:
             return True
-        diff = abs(self-z)
-        ref = max(self.abs(), z.abs())
+        rel_tol = self.Scalar(rel_tol)
+        abs_tol = self.Scalar(abs_tol)
+        diff = (self-z).scalar_abs()
+        ref = max(self.scalar_abs(), z.scalar_abs())
         return diff <= max(rel_tol * ref, abs_tol)
 
+
+    def abs(self):
+        """ aka mag """
+        magnitude = self.scalar_abs()
+        return self.__class__(magnitude, 0)
 
 # ----- Basic complex arithmetic ----- #
 
@@ -171,12 +173,6 @@ class CMath10:
 
 
 # ----- complex higher math ----- #
-
-    def abs(self):
-        """ aka mag """
-        # print(f"DEBUG abs(self: {self})")
-        return CMath10(self.scalar_abs(), 0)
-
 
     def acos(self):
         """ inverse cosine of a complex number """
@@ -286,7 +282,9 @@ class CMath10:
         """ aka mag """
         with localcontext() as ctx:
             ctx.prec += 2
-            result = self.Scalar(self.real * self.real + self.imag * self.imag).sqrt()
+            result = self.Scalar(
+                         self.real * self.real + 
+                         self.imag * self.imag).sqrt()
         return result
 
 
