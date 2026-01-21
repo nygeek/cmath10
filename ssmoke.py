@@ -11,7 +11,7 @@ from decimal import Decimal
 import unittest
 
 # ----- Local libraries ----- #
-from trace_debug import DebugTrace
+# from trace_debug import DebugTrace
 from math10 import StdLibAdapter as m
 
 class TestMath10Methods(unittest.TestCase):
@@ -47,8 +47,12 @@ class TestMath10Methods(unittest.TestCase):
                     x.tan(),
                     m.Scalar("1")))
 
-    # Just to see if it works, I'm using the cnc result for
-    # the isclose value.  It works with the default test tolerances
+    # The default setting for the comparison parameters for isclose
+    # are such that IEEE 754 floating point numbers (as used by cnc)
+    # will match the decimal numbers (as used by cnc10).  This means
+    # that the test suite from cmath should work as is, except for
+    # the funny +0, -0 stuff that indicates branch.
+
     def test_pi_on_five(self):
         self.assertTrue(
                 m.Scalar.isclose(
