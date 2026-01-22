@@ -60,39 +60,57 @@ class TestCMathMethods(unittest.TestCase):
         """ phase(1,1) """
         expected = cm(0.7853981633974483096, 0)
         actual = cm(1,1).phase()
-        print(f"test_phase_1: actual {actual}")
-        print(f"test_phase_1: expected {expected}")
-        self.assertTrue(cm.isclose(actual, expected, abs_tol=1e-15))
+        self.assertTrue(cm.isclose(actual, expected))
 
     def test_phase_2(self):
         """ phase(1,-1) """
         expected = cm(-0.7853981633974483096, 0)
         actual = cm(1,-1).phase()
-        print(f"test_phase_2: actual {actual}")
-        print(f"test_phase_2: expected {expected}")
-        self.assertTrue(cm.isclose(actual, expected, abs_tol=1e-15))
+        self.assertTrue(cm.isclose(actual, expected))
+
+    def test_abs(self):
+        """ abs(3+4i) is 5 """
+        expected = cm(5, 0)
+        actual = cm(3,4).abs()
+        self.assertTrue(cm.isclose(actual, expected))
+
+    def test_log(self):
+        """
+        ln(3+4i) is (1.6094379124341003746007593332262
+                     +0.927295218001612232428512462922428682i)
+        """
+        expected = cm("1.6094379124341003746007593332262",\
+                      "0.9272952180016122324285124629224")
+        actual = cm(3,4).log()
+        self.assertTrue(cm.isclose(actual, expected))
+
+    def test_exp(self):
+        """
+        exp(3+4i) is (-13.128783081462158-15.200784463067956j)
+        """
+        expected = cm("-13.128783081462158", "-15.200784463067956")
+        actual = cm(3,4).exp()
+        self.assertTrue(cm.isclose(actual, expected))
+
+    def test_sqrt_1(self):
+        """
+        sqrt(3+4i) is (2+i)
+        """
+        expected = cm("2", "1")
+        actual = cm(3,4).sqrt()
+        self.assertTrue(cm.isclose(actual, expected))
+
+    def test_sqrt_2(self):
+        """
+        sqrt(2+2i) is (1.5537739740300374+0.6435942529055826i)
+        """
+        expected = cm("1.5537739740300374", "0.6435942529055826")
+        actual = cm(2,2).sqrt()
+        self.assertTrue(cm.isclose(actual, expected))
 
 def oldmain():
     """ simple smoke test """
     DebugTrace(False)
-
-    z = CMath10("1", "1")
-    print(f"phase(z: {z}): {z.phase()}")
-    z = CMath10("1", "-1")
-    print(f"phase(z: {z}): {z.phase()}\n")
-
-    z = CMath10("3", "4")
-    r = z.scalar_abs()
-    print(f"scalar_abs(z: {z}): {r}\n")
-
-    z = CMath10("3", "4")
-    z2 = z.log()
-    print(f"log(z: {z}): {z2}")
-    print(f"e^(log(z)): {z2.exp()}\n")
-
-    z = CMath10("2", "2")
-    print("(expect (1.5537739740300374+0.6435942529055826j))")
-    print(f"sqrt(z: {z}): {z.sqrt()}\n")
 
     z = CMath10("4", "0")
     z2 = z.sqrt()

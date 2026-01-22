@@ -193,9 +193,15 @@ class Math10(Decimal):
             # For values close to 1, use atan(x) =
             #   pi/4 + atan((x-1)/(x+1)) to improve convergence
             if abs(x) > Decimal('0.5'):
-                result = self.__class__.pi() / 4
-                if x + 1 != 0:
-                    result += self.__class__((x-1)/(x+1)).atan()
+                pi_4 = self.__class__.pi() / 4
+                if x == self.__class__(1):
+                    return pi_4
+                if x == self.__class__(-1):
+                    return -pi_4
+                if x > 0:
+                    result = pi_4 + self.__class__((x-1)/(x+1)).atan()
+                else:
+                    result = -pi_4 + self.__class__((x-1)/(x+1)).atan()
                 return self.__class__(+result)
 
             power = x
@@ -226,13 +232,12 @@ class Math10(Decimal):
 
             if x > zero:
                 # quadrants 1 and 4
+                r = cls(y/x)
                 result = cls(y / x).atan()
             elif x < zero:
                 if y >= zero:
-                    print("y >= 0")
                     result = cls(y / x).atan() + pi
                 else:
-                    print("y < 0")
                     result = cls(y / x).atan() - pi
             else: # x is zero
                 if y > zero:
@@ -343,6 +348,10 @@ class StdLibAdapter:
     def tanh(z):
         """ functional form of tanh """
         return z.tanh()
+
+    @staticmethod
+    def atan2(y, x):
+        return Math10.atan2(y, x)
 
 
 def main():

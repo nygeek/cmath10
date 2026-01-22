@@ -203,7 +203,8 @@ class CMath10:
             i = self.__class__(0,1)
             one = self.__class__(1,0)
             two = self.__class__(2,0)
-            result = (one.sub(i.mul(self)).div(one.add(i.mul(self)))).log().mul(i).div(two)
+            result = (one.sub(i.mul(self)).\
+                    div(one.add(i.mul(self)))).log().mul(i).div(two)
         return self.__class__(result)
 
 
@@ -235,7 +236,9 @@ class CMath10:
 
     def phase(self):
         """ phase of z, aka arg z """
-        return self.__class__(self.Scalar.atan2(self.imag, self.real), self.Scalar(0))
+        return self.__class__(
+                self.Scalar.atan2(self.imag, self.real),
+                self.Scalar(0))
 
 
     def sqrt(self):

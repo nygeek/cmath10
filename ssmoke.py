@@ -94,5 +94,17 @@ class TestMath10Methods(unittest.TestCase):
                     x.tan().atan(),
                     m.Scalar("0.6283185307179586")))
 
+    def test_atan2_1(self):
+        x = m.Scalar(m.atan2(1, 1))
+        self.assertTrue(
+                x.isclose(
+                    m.Scalar("0.78539816339744830961566084581987572")))
+
+    def test_atan2_2(self):
+        x = m.Scalar(m.atan2(-1, 1))
+        self.assertTrue(
+                x.isclose(
+                    m.Scalar("-0.78539816339744830961566084581987572")))
+
 if __name__ == '__main__':
     unittest.main()
