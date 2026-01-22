@@ -229,8 +229,10 @@ class Math10(Decimal):
                 result = cls(y / x).atan()
             elif x < zero:
                 if y >= zero:
+                    print("y >= 0")
                     result = cls(y / x).atan() + pi
                 else:
+                    print("y < 0")
                     result = cls(y / x).atan() - pi
             else: # x is zero
                 if y > zero:
@@ -323,12 +325,6 @@ class StdLibAdapter:
     def atan(z):
         """ functional form of atan """
         return z.atan()
-
-
-    # @staticmethod
-    # def atan2(y, x):
-    #     """ functional form of atan2 """
-    #     return Static.atan2(y, x)
 
 
     @staticmethod
