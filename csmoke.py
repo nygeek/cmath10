@@ -15,25 +15,33 @@ from cmath10 import CMath10 as cm
 
 class TestCMathMethods(unittest.TestCase):
 
-    def test_add(self):
+    def test_add_1(self):
         """ test complex addition """
         a = cm("1", "3")
         b = cm("2.1", "7.9")
         self.assertTrue(cm.isclose(a.add(b), cm("3.1", "10.9")))
 
-    def test_sub(self):
+    def test_sub_1(self):
         """ test complex subtraction """
         a = cm("1", "3")
         b = cm("2.1", "7.9")
         self.assertTrue(cm.isclose(a.sub(b), cm("-1.1", "-4.9")))
 
-    def test_mul(self):
+    def test_mul_1(self):
         """ test complex multiplication """
         a = cm("1", "3")
         b = cm("2.1", "7.9")
         self.assertTrue(cm.isclose(a.mul(b), cm("-21.6", "14.2")))
 
     def test_div_1(self):
+        """ test complex multiplication """
+        a = cm("3", "4")
+        b = cm("1", "2")
+        actual = a.div(b)
+        expected = cm("2.2", "-0.4")
+        self.assertTrue(cm.isclose(actual, expected))
+
+    def test_div_2(self):
         """ test complex division 1 """
         a = cm("1", "3")
         b = cm("2.1", "7.9")
@@ -41,7 +49,7 @@ class TestCMathMethods(unittest.TestCase):
                          cm("0.3861119425321759952110146662675846", \
                             "-0.02394492666866207722238850643519904")))
 
-    def test_div_2(self):
+    def test_div_3(self):
         """ test complex division 2 """
         a = cm("1", "1")
         b = cm("1", "-1")
@@ -68,13 +76,13 @@ class TestCMathMethods(unittest.TestCase):
         actual = cm(1,-1).phase()
         self.assertTrue(cm.isclose(actual, expected))
 
-    def test_abs(self):
+    def test_abs_1(self):
         """ abs(3+4i) is 5 """
         expected = cm(5, 0)
         actual = cm(3,4).abs()
         self.assertTrue(cm.isclose(actual, expected))
 
-    def test_log(self):
+    def test_log_1(self):
         """
         ln(3+4i) is (1.6094379124341003746007593332262
                      +0.927295218001612232428512462922428682i)
@@ -84,7 +92,7 @@ class TestCMathMethods(unittest.TestCase):
         actual = cm(3,4).log()
         self.assertTrue(cm.isclose(actual, expected))
 
-    def test_exp(self):
+    def test_exp_1(self):
         """
         exp(3+4i) is (-13.128783081462158-15.200784463067956j)
         """
@@ -108,63 +116,101 @@ class TestCMathMethods(unittest.TestCase):
         actual = cm(2,2).sqrt()
         self.assertTrue(cm.isclose(actual, expected))
 
-def oldmain():
-    """ simple smoke test """
-    DebugTrace(False)
+    def test_sqrt_3(self):
+        """
+        sqrt(4+0i) is (2+0i)
+        """
+        expected = cm("2", "0")
+        actual = cm(4,0).sqrt()
+        self.assertTrue(cm.isclose(actual, expected))
 
-    z = CMath10("4", "0")
-    z2 = z.sqrt()
-    print(f"sqrt(z: {z}): {z2}")
-    z = CMath10("-4", "0")
-    z2 = z.sqrt()
-    print(f"sqrt(z: {z}): {z2}\n")
+    def test_sqrt_4(self):
+        """
+        sqrt(-4+0i) is (0+2i)
+        """
+        expected = cm("0", "2")
+        actual = cm(-4,0).sqrt()
+        self.assertTrue(cm.isclose(actual, expected))
 
-    z = CMath10("0", "1")
-    z2 = z.sqrt()
-    print(f"sqrt(z: {z}): {z2}\n")
+    def test_sqrt_5(self):
+        """
+        sqrt(0+1i) is (0.7071067811865476+0.7071067811865475i)
+        """
+        expected = cm("0.7071067811865476", "0.7071067811865476")
+        actual = cm(0,1).sqrt()
+        self.assertTrue(cm.isclose(actual, expected))
 
-    z = CMath10("1", "1")
-    z2 = z.sin()
-    print(f"sin(z: {z}): {z2}")
-    z = CMath10("1", "1")
-    z2 = z.cos()
-    print(f"cos(z: {z}): {z2}")
-    z = CMath10("1", "1")
-    z2 = z.tan()
-    print(f"tan(z: {z}): {z2}\n")
+    def test_sin_1(self):
+        """
+        sin(1+1i) is (1.2984575814159773+0.6349639147847361i)
+        """
+        expected = cm("1.2984575814159773", "0.6349639147847361")
+        actual = cm(1,1).sin()
+        self.assertTrue(cm.isclose(actual, expected))
 
-    e = CMath10.e()
-    print(f"e(): {e}")
-    pi = CMath10.pi()
-    print(f"pi(): {pi}")
+    def test_cos_1(self):
+        """
+        cos(1+1i) is (0.8337300251311491-0.9888977057628651i)
+        """
+        expected = cm("0.8337300251311491","-0.9888977057628651")
+        actual = cm(1,1).cos()
+        self.assertTrue(cm.isclose(actual, expected))
 
-    z = CMath10(1,1)
-    print(f"z: {z}")
-    print(f"z^2: {z.mul(z)}")
+    def test_tan_1(self):
+        """
+        tan(1+1i) is (0.2717525853195118+1.0839233273386943i)
+        """
+        expected = cm("0.2717525853195118","1.0839233273386943")
+        actual = cm(1,1).tan()
+        self.assertTrue(cm.isclose(actual, expected))
 
-    z1 = CMath10(3, 4)
-    print(f"z1: {z1}")
-    z2 = CMath10(1, 2)
-    print(f"z2: {z2}")
-    print("(expect 2.2 - 0.4i)")
-    print(f"z1/z2: {z1.div(z2)}")
+    def test_e_1(self):
+        """
+        e is (2.718281828459045+0i)
+        """
+        expected = cm("2.718281828459045","0")
+        actual = cm.e()
+        self.assertTrue(cm.isclose(actual, expected))
 
-    z = CMath10("1", "1")
-    print("(expect: (0.8337300251311491-0.9888977057628651j))")
-    print(f"cos(z: {z}): {z.cos()}")
+    def test_pi_1(self):
+        """
+        pi is (3.141592653589793+0i)
+        """
+        expected = cm("3.141592653589793","0")
+        actual = cm.pi()
+        self.assertTrue(cm.isclose(actual, expected))
 
-    z = CMath10("1", "1")
-    print(f"z: {z}")
-    print(f"cos(z): {z.cos()}")
-    print(f"acos(cos(z: {z})): {z.cos().acos()}")
+    def test_square_1(self):
+        """
+        (1+i)^2 is (0+2i)
+        """
+        expected = cm("0","2")
+        actual = cm(1,1).mul(cm(1,1))
+        self.assertTrue(cm.isclose(actual, expected))
 
-    z = CMath10(0, 0)
-    print(f"z: {z}")
-    print(f"acos(z): {z.acos()}")
+    def test_acos_1(self):
+        """
+        (1+1i).cos().acos() is (1+1i)
+        """
+        expected = cm("1","1")
+        actual = cm(1,1).cos().acos()
+        self.assertTrue(cm.isclose(actual, expected))
 
-    z = CMath10(-1, 0)
-    print(f"z: {z}")
-    print(f"acos(z): {z.acos()}")
+    def test_acos_2(self):
+        """
+        (0+0i).acos() is (1.5707963267948966-0i)
+        """
+        expected = cm("1.5707963267948966", "-0")
+        actual = cm(0,0).acos()
+        self.assertTrue(cm.isclose(actual, expected))
+
+    def test_acos_3(self):
+        """
+        (-1+0i).acos() is (pi, 0)
+        """
+        expected = cm.pi()
+        actual = cm(-1,0).acos()
+        self.assertTrue(cm.isclose(actual, expected))
 
 
 if __name__ == '__main__':

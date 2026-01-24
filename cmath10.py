@@ -181,7 +181,7 @@ class CMath10:
             zz = self.mul(self)
             i = self.__class__(0,1)
             one = self.__class__(1,0)
-            result = zz.sub(one).sqrt().add(self).log().div(i)
+            result = one.sub(zz).sqrt().mul(i).add(self).log().div(i)
         return result
 
 
