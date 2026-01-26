@@ -60,50 +60,11 @@ Moved smoke test from cmath10.py main() to a separate file, csmoke.py
 
 ## NEWS
 
-1. [2025-12-21] phase
-    * 2025-12-22
-1. [2025-12-21] exp
-    * Scalar from decimal.py
-    * Complex 2025-12-22
-1. [2025-12-21] log
-    * Scalar from decimal.py
-    * Complex 2025-12-24
-1. [2025-12-21] sqrt
-    * Scalar from decimal.py
-    * Complex 2025-12-24
-1. [2025-12-21] acos
-    * Scalar 2025-12-22
-1. [2025-12-21] asin
-    * Scalar 2025-12-22
-1. [2025-12-21] atan, atan2
-    * Scalar 2025-12-22
-1. [2025-12-21] cos
-    * Scalar 2025-12-22
-    * Complex 2025-12-25
-1. [2025-12-21] sin
-    * Scalar 2025-12-22
-    * Complex 2025-12-25
-1. [2025-12-21] tan
-    * Scalar 2025-12-22
-    * Complex 2025-12-25
-1. [2025-12-21] pi
-    * Scalar 2025-12-22
-    * Complex 2025-12-25
-1. [2025-12-21] e
-    * Scalar 2025-12-22
-    * Complex 2025-12-25
-1. [2025-12-21] add
-    * Scalar from decimal.py
-    * Complex 2025-12-21
-1. [2025-12-21] sub
-    * Scalar from decimal.py
-    * Complex 2025-12-21
-1. [2025-12-21] mul
-    * Scalar from decimal.py
-    * Complex 2025-12-21
-1. [2025-12-21] div
-    * Scalar from decimal.py
-    * Complex 2025-12-21
+Using print(dir(<module>)) I retrieved the list of methods in each
+of the modules involved in this project - *math* and *cmath*, which
+I am trying to shadow functionally, *decimal*, which is the  underlying
+arithmetic engine and *Math10* and *CMath10* which are contain the
+machinery I have built.
 
 ## Install
 
@@ -144,4 +105,21 @@ And then use pip to install it for the calculator:
 1. [2025-12-24] Complex asin
 1. [2025-12-24] Complex atan, atan2
 1. [2025-12-21] Complex pi
-1. [2025-12-21] Complex e
+1. [2025-12-21] Complex
+
+On 2026-01-25 I gathered the lists of methods from decimal, math,
+and CMath10 and used those to figure out the items needed to roughly
+complete the signatures for Math10 (the scalar part) and CMath10
+(the complex part).
+
+Scalar functions missing from Math10
+
+degrees
+dist
+erf
+erfc
+exp2
+expm1
+factorial
+floor
+fsum
