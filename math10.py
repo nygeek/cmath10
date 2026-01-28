@@ -279,7 +279,7 @@ class Math10(Decimal):
 
 
     def asinh(self):
-        """ inverse hyperbolic sin
+        """ inverse hyperbolic sin """
         with localcontext() as ctx:
             ctx.prec += 2
             one = self.__class__(1)
@@ -382,6 +382,7 @@ class StdLibAdapter:
 
     @staticmethod
     def atan2(y, x):
+        """ functional form of atan2 """
         return Math10.atan2(y, x)
 
 
