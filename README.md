@@ -93,7 +93,6 @@ And then use pip to install it for the calculator:
 1. [2025-12-21] acosh - DONE
 1. [2025-12-21] asinh - DONE
 1. [2025-12-21] atanh - DONE
-
 1. [2025-12-21] cosh - DONE
 1. [2025-12-21] sinh - DONE
 1. [2025-12-21] tanh - DONE
