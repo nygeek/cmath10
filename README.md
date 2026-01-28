@@ -115,18 +115,18 @@ complete the signatures for Math10 (the scalar part) and CMath10
 ### Math10
 
 #### Arithmetic
-__add__, __sub__, __mul__, __truediv__, __pow__
-__radd__, __rsub__, __rmul__, __rtruediv__, __rpow__
-__neg__, __pos__, __abs__
+```__add__, __sub__, __mul__, __truediv__, __pow__,
+__radd__, __rsub__, __rmul__, __rtruediv__, __rpow__,
+__neg__, __pos__, __abs__```
 
 ##### Comparisons
-__eq__, __ne__, __lt__, __le__, __gt__, __ge__
+```__eq__, __ne__, __lt__, __le__, __gt__, __ge__```
 
 ##### Conversions
-__float__, __int__, __str__, __repr__
+```__float__, __int__, __str__, __repr__```
 
 ##### Optional but useful
-__hash__
+```__hash__```
 
 ### CMath10
-__complex__
+```__complex__```
