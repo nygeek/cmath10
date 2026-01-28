@@ -88,43 +88,30 @@ And then use pip to install it for the calculator:
 
 ## TODO
 
+### Math10
+
+1. [2025-12-21] acosh - DONE
+1. [2025-12-21] asinh - DONE
+1. [2025-12-21] atanh - DONE
+
+1. [2025-12-21] cosh - DONE
+1. [2025-12-21] sinh - DONE
+1. [2025-12-21] tanh - DONE
+
+### CMath10
+
 1. [2025-12-21] polar
 1. [2025-12-21] rect
+1. [2025-12-24] Complex acos - DONE
+1. [2025-12-24] Complex asin - DONE
+1. [2025-12-24] Complex atan, atan2 - DONE
+1. [2025-12-21] Complex pi, e - DONE
 
-1. [2025-12-21] acosh
-1. [2025-12-21] asinh
-1. [2025-12-21] atanh
-
-1. [2025-12-21] cosh
-1. [2025-12-21] sinh
-1. [2025-12-21] tanh
+### for CNC
 
 1. [2025-12-24] Set up precision and clamping to emulate HP-35 behavior
-
-1. [2025-12-24] Complex acos
-1. [2025-12-24] Complex asin
-1. [2025-12-24] Complex atan, atan2
-1. [2025-12-21] Complex pi
-1. [2025-12-21] Complex
 
 On 2026-01-25 I gathered the lists of methods from decimal, math,
 and CMath10 and used those to figure out the items needed to roughly
 complete the signatures for Math10 (the scalar part) and CMath10
 (the complex part).
-
-### Math10
-
-#### Arithmetic
-```__add__, __sub__, __mul__, __truediv__, __pow__, __radd__, __rsub__, __rmul__, __rtruediv__, __rpow__, __neg__, __pos__, __abs__```
-
-##### Comparisons
-```__eq__, __ne__, __lt__, __le__, __gt__, __ge__```
-
-##### Conversions
-```__float__, __int__, __str__, __repr__```
-
-##### Optional but useful
-```__hash__```
-
-### CMath10
-```__complex__```

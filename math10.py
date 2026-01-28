@@ -187,7 +187,8 @@ class Math10(Decimal):
             # For |x| > 1, use the identity to improve convergence
             if abs(x) > 1:
                 sign = 1 if x >= 0 else -1
-                result = sign * self.__class__.pi() / 2 - self.__class__(1/x).atan()
+                result = sign * self.__class__.pi() / 2 \
+                        - self.__class__(1/x).atan()
                 return self.__class__(+result)
 
             # For values close to 1, use atan(x) =
@@ -255,7 +256,18 @@ class Math10(Decimal):
         with localcontext() as ctx:
             ctx.prec += 2
             result = (self.exp() + (-1 * self).exp()) / 2
-        return self.__class__(result)
+            return self.__class__(result)
+
+
+    def acosh(self):
+        """ inverse hyperbolic cosine """
+        if self < self.__class__(1):
+            raise ValueError("Math10 domain error")
+        with localcontext() as ctx:
+            ctx.prec += 2
+            one = self.__class__(1)
+            result = (self + ((self * self) - one).sqrt()).ln()
+            return self.__class__(result)
 
 
     def sinh(self):
@@ -263,7 +275,15 @@ class Math10(Decimal):
         with localcontext() as ctx:
             ctx.prec += 2
             result = (self.exp() - (-1 * self).exp()) / 2
-        return self.__class__(result)
+            return self.__class__(result)
+
+
+    def asinh(self):
+        """ inverse hyperbolic sin
+        with localcontext() as ctx:
+            ctx.prec += 2
+            one = self.__class__(1)
+            result = (self + (one + (self * self)).sqrt()).ln()
 
 
     def tanh(self):
@@ -271,7 +291,18 @@ class Math10(Decimal):
         with localcontext() as ctx:
             ctx.prec += 2
             result = self.sinh() / self.cosh()
-        return self.__class__(result)
+            return self.__class__(result)
+
+
+    def atanh(self):
+        """ inverse hyperbolic tangent """
+        one = self.__class__(1)
+        if self > 1 or self < one.mul(-1):
+            raise ValueError("Math10 domain error")
+        with localcontext() as ctx:
+            ctx.prec += 2
+            result = ((one + self) / (one - self)).ln() / 2
+            return self.__class__(result)
 
 
 class StdLibAdapter:
