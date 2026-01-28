@@ -296,12 +296,11 @@ class Math10(Decimal):
 
     def atanh(self):
         """ inverse hyperbolic tangent """
-        one = self.__class__(1)
-        if self > 1 or self < one.mul(-1):
+        if self > self.__class__(1) or self < self.__class__(-1):
             raise ValueError("Math10 domain error")
         with localcontext() as ctx:
             ctx.prec += 2
-            result = ((one + self) / (one - self)).ln() / 2
+            result = ((1 + self) / (1 - self)).ln() / 2
             return self.__class__(result)
 
 
@@ -328,57 +327,74 @@ class StdLibAdapter:
 
 
     @staticmethod
-    def cos(z):
+    def cos(x):
         """ functional form of cos """
-        return z.cos()
+        return Math10(x).cos()
 
 
     @staticmethod
-    def sin(z):
+    def sin(x):
         """ functional form of sin """
-        return z.sin()
+        return Math10(x).sin()
 
 
     @staticmethod
-    def tan(z):
+    def tan(x):
         """ functional form of tan """
-        return z.tan()
+        return Math10(x).tan()
 
 
     @staticmethod
-    def acos(z):
+    def acos(x):
         """ functional form of acos """
-        return z.acos()
+        return Math10(x).acos()
 
 
     @staticmethod
     def asin(z):
         """ functional form of asin """
-        return z.asin()
+        return Math10(z).asin()
 
 
     @staticmethod
-    def atan(z):
+    def atan(x):
         """ functional form of atan """
-        return z.atan()
+        return Math10(x).atan()
 
 
     @staticmethod
-    def cosh(z):
+    def cosh(x):
         """ functional form of cosh """
-        return z.cosh()
+        return Math10(x).cosh()
 
 
     @staticmethod
-    def sinh(z):
+    def acosh(x):
+        """ functional form of acosh """
+        return Math10(x).acosh()
+
+
+    @staticmethod
+    def sinh(x):
         """ functional form of sinh """
-        return z.sinh()
+        return Math10(x).sinh()
 
 
     @staticmethod
-    def tanh(z):
+    def asinh(x):
+        """ functional form of asinh """
+        return Math10(x).asinh()
+
+
+    @staticmethod
+    def tanh(x):
         """ functional form of tanh """
-        return z.tanh()
+        return Math10(x).tanh()
+
+    @staticmethod
+    def atanh(x):
+        """ functional form of tanh """
+        return Math10(x).atanh()
 
     @staticmethod
     def atan2(y, x):

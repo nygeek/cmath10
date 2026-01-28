@@ -101,5 +101,63 @@ class TestMath10Methods(unittest.TestCase):
         actual = m.Scalar(m.atan2(-1, 1))
         self.assertTrue(m.Scalar.isclose(expected, actual))
 
+    # These cosh, sinh, and tanh test cases come from 
+    # github.com/python/cpython/Lib/test/Mathdata/cmath_testcases.txt
+
+    def test_cosh_1(self):
+        """ does cosh() have the right value? """
+        expected = m.Scalar("2.0000000000000001504")
+        actual = m.Scalar(m.cosh(1.3169578969248168))
+        self.assertTrue(m.Scalar.isclose(expected, actual))
+
+    def test_cosh_2(self):
+        """ does cosh() have the right value? """
+        expected = m.Scalar("2.0000000000000001504")
+        actual = m.Scalar(m.cosh(1.3169578969248168))
+        self.assertTrue(m.Scalar.isclose(expected, actual))
+
+    def test_acosh_1(self):
+        """ does acosh() have the right value? """
+        expected = m.Scalar("1.3169578969248168")
+        actual = m.Scalar(m.acosh(2))
+        self.assertTrue(m.Scalar.isclose(expected, actual))
+
+    def test_sinh_1(self):
+        """ does sinh() have the right value? """
+        expected = m.Scalar("1.9999999999999999078")
+        actual = m.Scalar(m.sinh(1.4436354751788103))
+        self.assertTrue(m.Scalar.isclose(expected, actual))
+
+    def test_sinh_2(self):
+        """ does sinh() have the right value? """
+        expected = m.Scalar("-1.9999999999999999078")
+        actual = m.Scalar(m.sinh(-1.4436354751788103))
+        self.assertTrue(m.Scalar.isclose(expected, actual))
+
+    def test_asinh_1(self):
+        """ does asinh() have the right value? """
+        # this is test_sinh_2 inverted
+        expected = m.Scalar("-1.4436354751788103")
+        actual = m.Scalar(m.asinh(-1.9999999999999999078))
+        self.assertTrue(m.Scalar.isclose(expected, actual))
+
+    def test_tanh_1(self):
+        """ does tanh() have the right value? """
+        expected = m.Scalar("0.50000000000000003402")
+        actual = m.Scalar(m.tanh(0.5493061443340549))
+        self.assertTrue(m.Scalar.isclose(expected, actual))
+
+    def test_tanh_2(self):
+        """ does tanh() have the right value? """
+        expected = m.Scalar("-0.50000000000000003402")
+        actual = m.Scalar(m.tanh(-0.5493061443340549))
+        self.assertTrue(m.Scalar.isclose(expected, actual))
+
+    def test_atanh_1(self):
+        """ does atanh() have the right value? """
+        expected = m.Scalar("0.5493061443340549")
+        actual = m.Scalar(m.atanh(0.50000000000000003402))
+        self.assertTrue(m.Scalar.isclose(expected, actual))
+
 if __name__ == '__main__':
     unittest.main()

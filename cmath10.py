@@ -182,7 +182,7 @@ class CMath10:
             i = self.__class__(0,1)
             one = self.__class__(1,0)
             result = one.sub(zz).sqrt().mul(i).add(self).log().div(i)
-        return result
+            return result
 
 
     def asin(self):
@@ -193,7 +193,7 @@ class CMath10:
             i = self.__class__(0,1)
             one = self.__class__(1,0)
             result = self.mul(i).add(one.sub(zz).sqrt()).log().div(i)
-        return self.__class__(result)
+            return self.__class__(result)
 
 
     def atan(self):
@@ -205,7 +205,7 @@ class CMath10:
             two = self.__class__(2,0)
             result = (one.sub(i.mul(self)).\
                     div(one.add(i.mul(self)))).log().mul(i).div(two)
-        return self.__class__(result)
+            return self.__class__(result)
 
 
     def exp(self):
@@ -222,7 +222,7 @@ class CMath10:
         """ natural logarithm of z """
         # note: in cmath log is natural log, log10 is decimal log
         # note: in decimal.py ln is natural log
-        real = self.Scalar(self.scalar_abs()).ln() # this calls decimal.py ln
+        real = self.Scalar(self.scalar_abs()).ln()
         imag = self.Scalar.atan2(self.imag, self.real)
         return self.__class__(real, imag)
 
@@ -248,25 +248,53 @@ class CMath10:
             ctx.prec += 2
             r = self.scalar_abs()
             sign = 1 if self.imag >= 0 else -1
-        return self.__class__(((r + self.real)/2).sqrt(), sign * ((r - self.real)/2).sqrt())
+            result = self.__class__(((r + self.real)/2).sqrt(), \
+                      sign * ((r - self.real)/2).sqrt())
+            return result
 
 
     def cos(self):
         """ complex cosine """
         with localcontext() as ctx:
             ctx.prec += 2
-            real = self.Scalar(self.real).cos() * self.Scalar(self.imag).cosh()
-            imag = -1 * (self.Scalar(self.real).sin() * self.Scalar(self.imag).sinh())
-        return self.__class__(real, imag)
+            real = self.Scalar(self.real).cos() * \
+                    self.Scalar(self.imag).cosh()
+            imag = -1 * (self.Scalar(self.real).sin() * \
+                    self.Scalar(self.imag).sinh())
+            return self.__class__(real, imag)
+
+
+    def cosh(self):
+        """ complex hyperbolic cosine """
+        with localcontext() as ctx:
+            ctx.prec += 2
+            re = self.real
+            im = self.imag
+            real = self.Scalar.sinh(re) * self.Scalar.cos(im)
+            imag = self.Scalar.cosh(re) * self.Scalar.sin(im)
+            return self.__class__(real, imag)
 
 
     def sin(self):
         """ complex sine """
         with localcontext() as ctx:
             ctx.prec += 2
-            real = self.Scalar(self.real).sin() * self.Scalar(self.imag).cosh()
-            imag = self.Scalar(self.real).cos() * self.Scalar(self.imag).sinh()
-        return self.__class__(real, imag)
+            real = self.Scalar(self.real).sin() * \
+                    self.Scalar(self.imag).cosh()
+            imag = self.Scalar(self.real).cos() * \
+                    self.Scalar(self.imag).sinh()
+            return self.__class__(real, imag)
+
+
+    def sinh(self):
+        """ complex hyperbolic sine """
+        with localcontext() as ctx:
+            ctx.prec += 2
+            re = self.real()
+            im = self.imag()
+            real = self.Scalar.cosh(re) * self.Scalar.cos(im)
+            imag = self.Scalar.sinh(re) * self.Scalar.sin(im)
+            return self.__class__(real, imag)
 
 
     def tan(self):
@@ -276,7 +304,14 @@ class CMath10:
             num = self.sin()
             den = self.cos()
             result = num.div(den)
-        return self.__class__(result)
+            return self.__class__(result)
+
+
+    def tan(self):
+        """ complex hyperbolic tangent """
+        with localcontext() as ctx:
+            ctx.prec += 2
+            return (self.sinh() / self.cosh())
 
 
 # ----- scalar result on complex numbers ----- #
@@ -370,9 +405,19 @@ class StdLibAdapter:
         return z.acos()
 
     @staticmethod
+    def acosh(z):
+        """ functional form of acosh """
+        return z.acosh()
+
+    @staticmethod
     def asin(z):
         """ functional form of asin """
         return z.asin()
+
+    @staticmethod
+    def asinh(z):
+        """ functional form of asinh """
+        return z.asinh()
 
     @staticmethod
     def atan(z):
@@ -380,9 +425,19 @@ class StdLibAdapter:
         return z.atan()
 
     @staticmethod
+    def atanh(z):
+        """ functional form of atanh """
+        return z.atanh()
+
+    @staticmethod
     def cos(z):
         """ functional form of cos """
         return z.cos()
+
+    @staticmethod
+    def cosh(z):
+        """ functional form of cosh """
+        return z.cosh()
 
     @staticmethod
     def sin(z):
@@ -390,9 +445,19 @@ class StdLibAdapter:
         return z.sin()
 
     @staticmethod
+    def sinh(z):
+        """ functional form of sinh """
+        return z.sinh()
+
+    @staticmethod
     def tan(z):
         """ functional form of tan """
         return z.tan()
+
+    @staticmethod
+    def tanh(z):
+        """ functional form of tanh """
+        return z.tanh()
 
     @staticmethod
     def exp(z):
