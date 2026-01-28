@@ -115,9 +115,7 @@ complete the signatures for Math10 (the scalar part) and CMath10
 ### Math10
 
 #### Arithmetic
-```__add__, __sub__, __mul__, __truediv__, __pow__,
-__radd__, __rsub__, __rmul__, __rtruediv__, __rpow__,
-__neg__, __pos__, __abs__```
+```__add__, __sub__, __mul__, __truediv__, __pow__, __radd__, __rsub__, __rmul__, __rtruediv__, __rpow__, __neg__, __pos__, __abs__```
 
 ##### Comparisons
 ```__eq__, __ne__, __lt__, __le__, __gt__, __ge__```
