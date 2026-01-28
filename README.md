@@ -112,14 +112,21 @@ and CMath10 and used those to figure out the items needed to roughly
 complete the signatures for Math10 (the scalar part) and CMath10
 (the complex part).
 
-Scalar functions missing from Math10
+### Math10
 
-degrees
-dist
-erf
-erfc
-exp2
-expm1
-factorial
-floor
-fsum
+#### Arithmetic
+__add__, __sub__, __mul__, __truediv__, __pow__
+__radd__, __rsub__, __rmul__, __rtruediv__, __rpow__
+__neg__, __pos__, __abs__
+
+##### Comparisons
+__eq__, __ne__, __lt__, __le__, __gt__, __ge__
+
+##### Conversions
+__float__, __int__, __str__, __repr__
+
+##### Optional but useful
+__hash__
+
+### CMath10
+__complex__
