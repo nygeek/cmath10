@@ -7,7 +7,7 @@ Copyright (C) 2025 NYGeek LLC
 """
 
 # ----- Python libraries ----- #
-from decimal import Decimal
+# from decimal import Decimal
 import unittest
 
 # ----- Local libraries ----- #
@@ -15,37 +15,37 @@ import unittest
 from math10 import StdLibAdapter as m
 
 class TestMath10Methods(unittest.TestCase):
+    """ Smoke test for Math10 """
 
     def test_pi(self):
-        self.assertTrue(
-                m.Scalar.isclose(m.pi(), 
-                       m.Scalar("3.14159265358979323846264338328")))
+        """ does pi() return the right value? """
+        expected = m.Scalar("3.14159265358979323846264338328")
+        actual = m.pi()
+        self.assertTrue(m.Scalar.isclose(expected, actual))
 
     def test_e(self):
-        self.assertTrue(
-                m.Scalar.isclose(
-                    m.e(),
-                    m.Scalar("2.7182818284590452353602874713527")))
+        """ does e() return the right value? """
+        expected = m.Scalar("2.7182818284590452353602874713527")
+        actual = m.e()
+        self.assertTrue(m.Scalar.isclose(expected, actual))
 
     def test_pi_on_four(self):
-        self.assertTrue(
-                m.Scalar.isclose(
-                    m.pi() / m.Scalar("4"),
-                    m.Scalar("0.785398163397448309615660845819875")))
+        """ does pi/4 have the right value? """
+        expected = m.Scalar("0.785398163397448309615660845819875")
+        actual = m.pi() / m.Scalar("4")
+        self.assertTrue(m.Scalar.isclose(expected, actual))
 
     def test_cos_pi_on_four(self):
-        x = m.Scalar(m.pi() / m.Scalar("4"))
-        self.assertTrue(
-                m.Scalar.isclose(
-                    x.cos(),
-                    m.Scalar("0.7071067811865475244008443621048495")))
+        """ does cos(pi/4) have the right value? """
+        expected = m.Scalar("0.7071067811865475244008443621048495")
+        actual = m.Scalar(m.pi() / m.Scalar("4")).cos()
+        self.assertTrue(m.Scalar.isclose(expected, actual))
 
     def test_tan_pi_on_four(self):
-        x = m.Scalar(m.pi() / m.Scalar("4"))
-        self.assertTrue(
-                m.Scalar.isclose(
-                    x.tan(),
-                    m.Scalar("1")))
+        """ does tan(pi/4) have the right value? """
+        expected = m.Scalar("1")
+        actual = m.Scalar(m.pi() / m.Scalar("4")).tan()
+        self.assertTrue(m.Scalar.isclose(expected, actual))
 
     # The default setting for the comparison parameters for isclose
     # are such that IEEE 754 floating point numbers (as used by cnc)
@@ -54,57 +54,52 @@ class TestMath10Methods(unittest.TestCase):
     # the funny +0, -0 stuff that indicates branch.
 
     def test_pi_on_five(self):
-        self.assertTrue(
-                m.Scalar.isclose(
-                    m.pi() / m.Scalar("5"),
-                    m.Scalar("0.6283185307179586")))
+        """ does pi/5 have the right value? """
+        expected = m.Scalar("0.6283185307179586")
+        actual = m.pi() / m.Scalar("5")
+        self.assertTrue(m.Scalar.isclose(expected, actual))
 
     def test_sin_pi_on_five(self):
-        x = m.Scalar(m.pi() / m.Scalar("5"))
-        self.assertTrue(
-                m.Scalar.isclose(
-                    x.sin(),
-                    m.Scalar("0.5877852522924731")))
+        """ does sin(pi/5) have the right value? """
+        expected =  m.Scalar("0.5877852522924731")
+        actual = m.Scalar(m.pi() / m.Scalar("5")).sin()
+        self.assertTrue(m.Scalar.isclose(expected, actual))
 
     def test_sin_asin_pi_on_five(self):
-        x = m.Scalar(m.pi() / m.Scalar("5"))
-        self.assertTrue(
-                m.Scalar.isclose(
-                    x.sin().asin(),
-                    m.Scalar("0.6283185307179586")))
+        """ does asin(sin(pi/5)) have the right value? """
+        expected = m.Scalar("0.6283185307179586")
+        actual = m.Scalar(m.pi() / m.Scalar("5")).sin().asin()
+        self.assertTrue(m.Scalar.isclose(expected, actual))
 
     def test_cos_acos_pi_on_five(self):
-        x = m.Scalar(m.pi() / m.Scalar("5"))
-        self.assertTrue(
-                m.Scalar.isclose(
-                    x.cos().acos(),
-                    m.Scalar("0.6283185307179586")))
+        """ does acos(cos(pi/5)) have the right value? """
+        expected = m.Scalar("0.6283185307179586")
+        actual = m.Scalar(m.pi() / m.Scalar("5")).cos().acos()
+        self.assertTrue(m.Scalar.isclose(expected, actual))
 
     def test_tan_pi_on_five(self):
-        x = m.Scalar(m.pi() / m.Scalar("5"))
-        self.assertTrue(
-                m.Scalar.isclose(
-                    x.tan(),
-                    m.Scalar("0.7265425280053609")))
+        """ does tan(pi/5) have the right value? """
+        expected = m.Scalar("0.7265425280053609")
+        actual = m.Scalar(m.pi() / m.Scalar("5")).tan()
+        self.assertTrue(m.Scalar.isclose(expected, actual))
 
-    def test_sin_asin_pi_on_five(self):
-        x = m.Scalar(m.pi() / m.Scalar("5"))
-        self.assertTrue(
-                m.Scalar.isclose(
-                    x.tan().atan(),
-                    m.Scalar("0.6283185307179586")))
+    def test_tan_atan_pi_on_five(self):
+        """ does atan(tan(pi/5)) have the right value? """
+        expected = m.Scalar("0.6283185307179586")
+        actual = m.Scalar(m.pi() / m.Scalar("5")).tan().atan()
+        self.assertTrue(m.Scalar.isclose(expected, actual))
 
     def test_atan2_1(self):
-        x = m.Scalar(m.atan2(1, 1))
-        self.assertTrue(
-                x.isclose(
-                    m.Scalar("0.78539816339744830961566084581987572")))
+        """ doe atan2(1,1) have the right value? """
+        expected = m.Scalar("0.78539816339744830961566084581987572")
+        actual = m.Scalar(m.atan2(1, 1))
+        self.assertTrue(m.Scalar.isclose(expected, actual))
 
     def test_atan2_2(self):
-        x = m.Scalar(m.atan2(-1, 1))
-        self.assertTrue(
-                x.isclose(
-                    m.Scalar("-0.78539816339744830961566084581987572")))
+        """ doe atan2(-1,1) have the right value? """
+        expected = m.Scalar("-0.78539816339744830961566084581987572")
+        actual = m.Scalar(m.atan2(-1, 1))
+        self.assertTrue(m.Scalar.isclose(expected, actual))
 
 if __name__ == '__main__':
     unittest.main()

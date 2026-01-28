@@ -10,10 +10,11 @@ Copyright (C) 2025 NYGeek LLC
 import unittest
 
 # ----- Local libraries ----- #
-from trace_debug import DebugTrace
+# from trace_debug import DebugTrace
 from cmath10 import CMath10 as cm
 
 class TestCMathMethods(unittest.TestCase):
+    """ Smoke Tests for CMath10 """
 
     def test_add_1(self):
         """ test complex addition """

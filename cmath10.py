@@ -286,7 +286,7 @@ class CMath10:
         with localcontext() as ctx:
             ctx.prec += 2
             result = self.Scalar(
-                         self.real * self.real + 
+                         self.real * self.real +
                          self.imag * self.imag).sqrt()
         return result
 

@@ -233,13 +233,12 @@ class Math10(Decimal):
 
             if x > zero:
                 # quadrants 1 and 4
-                r = cls(y/x)
-                result = cls(y / x).atan()
+                result = cls(y/x).atan()
             elif x < zero:
                 if y >= zero:
-                    result = cls(y / x).atan() + pi
+                    result = cls(y/x).atan() + pi
                 else:
-                    result = cls(y / x).atan() - pi
+                    result = cls(y/x).atan() - pi
             else: # x is zero
                 if y > zero:
                     result = pi / 2
@@ -284,6 +283,7 @@ class Math10(Decimal):
             ctx.prec += 2
             one = self.__class__(1)
             result = (self + (one + (self * self)).sqrt()).ln()
+            return self.__class__(result)
 
 
     def tanh(self):
@@ -312,7 +312,7 @@ class StdLibAdapter:
     @staticmethod
     def isclose(z, rel_tol=1e-9, abs_tol=0.0):
         """ functional form of isclose """
-        return self.isclose(z, rel_tol, abs_tol)
+        return Math10.isclose(z, rel_tol, abs_tol)
 
 
     @staticmethod
