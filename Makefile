@@ -42,6 +42,7 @@ PYTHON_CODE = \
 
 FILES = \
 	${PYTHON_CODE} \
+	LICENSE \
 	Makefile \
 	.gitattributes \
 	.gitignore \
