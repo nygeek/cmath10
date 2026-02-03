@@ -27,6 +27,8 @@ as possible.
 ## Author
 
 Written by Marc Donner (marc@nygeek.net)
+SPDX-License-Identifier: MIT
+Copyright (c) 2026 NYGeek LLC
 
 ## Thanks
 

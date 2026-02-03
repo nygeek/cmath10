@@ -2,6 +2,7 @@
 
 Started 2025-12-24
 
+SPDX-License-Identifier: MIT
 Copyright (C) 2025 NYGeek LLC
 
 """

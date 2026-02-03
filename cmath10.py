@@ -4,8 +4,10 @@
     Modeled on the cmath.py library distributed as part of Python,
     but using the decimal.py long decimal math machinery.
 
+
 Started 2025-12-21
 
+SPDX-License-Identifier: MIT
 Copyright (C) 2025 NYGeek LLC
 
     ToDo list in README.md
