@@ -101,7 +101,7 @@ class TestMath10Methods(unittest.TestCase):
         actual = m.Scalar(m.atan2(-1, 1))
         self.assertTrue(m.Scalar.isclose(expected, actual))
 
-    # These cosh, sinh, and tanh test cases come from 
+    # These cosh, sinh, and tanh test cases come from
     # github.com/python/cpython/Lib/test/Mathdata/cmath_testcases.txt
 
     def test_cosh_1(self):

@@ -65,7 +65,7 @@ class CMath10:
                     DeprecationWarning,
                     stacklevel=2
                 )
-                self += i * imag
+                self += self.__class__(0,1) * imag
         else:
             if imag is None:
                 imag = 0
