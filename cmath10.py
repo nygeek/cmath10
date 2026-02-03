@@ -15,6 +15,7 @@ Copyright (C) 2025 NYGeek LLC
 # ----- Python libraries ----- #
 import json
 from decimal import Decimal, getcontext, localcontext, InvalidOperation
+import warnings
 
 # ----- Local libraries ----- #
 # from trace_debug import DebugTrace
@@ -51,10 +52,20 @@ class CMath10:
         """ Initialize a complex decimal. """
         # print(f"DEBUG CMath10(real: {real}, imag: {imag})")
         if isinstance(real, CMath10):
+            warnings.warn(
+                "Complex10() argument 'real' must be a real number, not complex",
+                DeprecationWarning,
+                stacklevel=2
+            )
             self.real = real.real
             self.imag = real.imag
             if imag is not None:
-                self.imag += self.Scalar(imag)
+                warnings.warn(
+                    "Complex10() argument 'imag' must be a real number, not complex",
+                    DeprecationWarning,
+                    stacklevel=2
+                )
+                self += i * imag
         else:
             if imag is None:
                 imag = 0
@@ -290,8 +301,8 @@ class CMath10:
         """ complex hyperbolic sine """
         with localcontext() as ctx:
             ctx.prec += 2
-            re = self.real()
-            im = self.imag()
+            re = self.real
+            im = self.imag
             real = self.Scalar.cosh(re) * self.Scalar.cos(im)
             imag = self.Scalar.sinh(re) * self.Scalar.sin(im)
             return self.__class__(real, imag)
@@ -301,13 +312,10 @@ class CMath10:
         """ complex tangent """
         with localcontext() as ctx:
             ctx.prec += 2
-            num = self.sin()
-            den = self.cos()
-            result = num.div(den)
-            return self.__class__(result)
+            return (self.sin() / self.cos())
 
 
-    def tan(self):
+    def tanh(self):
         """ complex hyperbolic tangent """
         with localcontext() as ctx:
             ctx.prec += 2
