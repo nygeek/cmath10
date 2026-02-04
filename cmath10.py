@@ -10,7 +10,7 @@ Started 2025-12-21
 SPDX-License-Identifier: MIT
 Copyright (C) 2025 NYGeek LLC
 
-    ToDo list in README.md
+ToDo list in README.md
 
 """
 

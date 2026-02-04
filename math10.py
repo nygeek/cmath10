@@ -7,7 +7,7 @@ Split out from cmath10 2025-12-26
 SPDX-License-Identifier: MIT
 Copyright (C) 2025 NYGeek LLC
 
-    ToDo list in README.md
+ToDo list in README.md
 
 """
 
