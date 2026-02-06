@@ -10,7 +10,7 @@ description = "Decimal Complex Math classes - CMath10 and Math10"
 authors = [
     { name = "Marc Donner", email = "marc@nygeek.net" },
     ]
-requires-python = ">=3.9"
+requires-python = ">=3.5"
 
 [tool.setuptools]
 py-modules = ["math10", "cmath10"]
