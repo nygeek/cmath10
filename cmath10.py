@@ -15,7 +15,7 @@ ToDo list in README.md
 """
 
 # ----- Python libraries ----- #
-from decimal import Decimal, getcontext, localcontext, InvalidOperation
+from decimal import Decimal, getcontext, localcontext
 import warnings
 
 # ----- Local libraries ----- #

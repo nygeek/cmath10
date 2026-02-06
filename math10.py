@@ -12,7 +12,7 @@ ToDo list in README.md
 """
 
 # ----- Python libraries ----- #
-from decimal import Decimal, localcontext, InvalidOperation
+from decimal import Decimal, localcontext
 
 
 class Math10(Decimal):
