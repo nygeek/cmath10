@@ -15,33 +15,12 @@ ToDo list in README.md
 """
 
 # ----- Python libraries ----- #
-import json
 from decimal import Decimal, getcontext, localcontext, InvalidOperation
 import warnings
 
 # ----- Local libraries ----- #
 # from trace_debug import DebugTrace
 from math10 import Math10
-
-# ----- JSON Encoder for Decimal ----- #
-
-class DecimalEncoder(json.JSONEncoder):
-    """ Enable decimal.py objects to be JSON serialized. """
-    def default(self, o):
-        if isinstance(o, Decimal):
-            return str(o)
-        return super().default(o)
-
-
-def decimal_decoder(dct):
-    """ Convert to Decimal in JSON handler """
-    for key, value in dct.items():
-        if isinstance(value, str):
-            try:
-                dct[key] = Decimal(value)
-            except (InvalidOperation, TypeError, ValueError):
-                pass
-    return dct
 
 # ----- Main CMath10 class ----- #
 
