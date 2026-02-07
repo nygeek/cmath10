@@ -277,7 +277,7 @@ class Math10(Decimal):
 
     def atanh(self):
         """ inverse hyperbolic tangent """
-        if self > self.__class__(1) or self < self.__class__(-1):
+        if self >= self.__class__(1) or self <= self.__class__(-1):
             raise ValueError("Math10 domain error")
         with localcontext() as ctx:
             ctx.prec += 2
