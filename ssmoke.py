@@ -78,6 +78,12 @@ class TestMath10Methods(unittest.TestCase):
         actual = m.Scalar(m.pi() / m.Scalar("5")).cos().acos()
         self.assertTrue(m.Scalar.isclose(expected, actual))
 
+    def test_cos_acos_minus_one(self):
+        """ does acos(-1) have the right value? """
+        expected = m.Scalar("3.141592653589793")
+        actual = m.Scalar("-1").acos()
+        self.assertTrue(m.Scalar.isclose(expected, actual))
+
     def test_tan_pi_on_five(self):
         """ does tan(pi/5) have the right value? """
         expected = m.Scalar("0.7265425280053609")

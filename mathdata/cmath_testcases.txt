@@ -1,0 +1,65 @@
+-- Subset of CPython cmath_testcases.txt for math10 (real-axis cases only).
+-- Full file: https://raw.githubusercontent.com/python/cpython/main/Lib/test/mathdata/cmath_testcases.txt
+-- Format: id fn arg_real arg_imag -> exp_real exp_imag [flags]
+
+-- acos: real inputs
+acos0000 acos 0.0 0.0 -> 1.5707963267948966 -0.0
+acos0010 acos 1.0 0.0 -> 0.0 -0.0
+acos0012 acos -1.0 0.0 -> 3.1415926535897931 -0.0
+acos0056 acos 0.001 0.0 -> 1.56979632662823 -0.0
+
+-- asin: real inputs
+asin0000 asin 0.0 0.0 -> 0.0 0.0
+asin0010 asin 1.0 0.0 -> 1.5707963267948966 0.0
+asin0012 asin -1.0 0.0 -> -1.5707963267948966 0.0
+asin0056 asin 0.001 0.0 -> 0.0010000001666667416 0.0
+
+-- acosh: real inputs (real axis)
+acosh0010 acosh 1.0 0.0 -> 0.0 0.0
+acosh0066 acosh 2.0 0.0 -> 1.3169578969248168 0.0
+acosh0067 acosh 2.0 -0.0 -> 1.3169578969248168 -0.0
+
+-- cos: real inputs
+cos0000 cos 0.0 0.0 -> 1.0 0.0
+cos0010 cos 0.001 0.0 -> 0.9999995 0.0
+cos0020 cos 0.5 0.0 -> 0.87758256189037272 0.0
+cos0030 cos 1.0 0.0 -> 0.54030230586813972 0.0
+cos0040 cos 3.1415926535897931 0.0 -> -1.0 0.0
+
+-- sin: real inputs
+sin0000 sin 0.0 0.0 -> 0.0 0.0
+sin0010 sin 0.001 0.0 -> 0.00099999983333334167 0.0
+sin0020 sin 0.5 0.0 -> 0.47942553860420301 0.0
+sin0030 sin 1.0 0.0 -> 0.8414709848078965 0.0
+sin0040 sin 3.1415926535897931 0.0 -> 1.2246467991473532e-16 0.0
+
+-- tan: real inputs
+tan0000 tan 0.0 0.0 -> 0.0 0.0
+tan0010 tan 0.001 0.0 -> 0.0010000003333334667 0.0
+tan0020 tan 0.5 0.0 -> 0.54630248984379048 0.0
+tan0030 tan 1.0 0.0 -> 1.5574077246549022 0.0
+
+-- cosh: real inputs
+cosh0000 cosh 0.0 0.0 -> 1.0 0.0
+cosh0010 cosh 0.001 0.0 -> 1.0000005 0.0
+cosh0020 cosh 1.0 0.0 -> 1.5430806348152437 0.0
+
+-- sinh: real inputs
+sinh0000 sinh 0.0 0.0 -> 0.0 0.0
+sinh0010 sinh 0.001 0.0 -> 0.0010000001666667083 0.0
+sinh0020 sinh 1.0 0.0 -> 1.1752011936438014 0.0
+
+-- tanh: real inputs
+tanh0000 tanh 0.0 0.0 -> 0.0 0.0
+tanh0010 tanh 0.001 0.0 -> 0.0009999996666668667 0.0
+tanh0020 tanh 1.0 0.0 -> 0.76159415595576485 0.0
+
+-- asinh: real inputs
+asinh0000 asinh 0.0 0.0 -> 0.0 0.0
+asinh0010 asinh 1.0 0.0 -> 0.88137358701954305 0.0
+asinh0020 asinh -1.0 0.0 -> -0.88137358701954305 0.0
+
+-- atanh: real inputs (|x| < 1)
+atanh0000 atanh 0.0 0.0 -> 0.0 0.0
+atanh0010 atanh 0.5 0.0 -> 0.54930614433405489 0.0
+atanh0020 atanh -0.5 0.0 -> -0.54930614433405489 0.0

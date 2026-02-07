@@ -135,8 +135,9 @@ class Math10(Decimal):
                 raise ValueError("arcsin(x) requires |x| <= 1")
             if abs(x) > Decimal('0.7'):
                 sign = 1 if x >= 0 else -1
-                result = self.pi() / 2 - \
-                    self.__class__((1 - x*x).sqrt()).asin() * sign
+                # arcsin(x) = sign * (pi/2 - arcsin(sqrt(1-x^2)))
+                result = sign * (self.pi() / 2 - \
+                    self.__class__((1 - x*x).sqrt()).asin())
                 return self.__class__(+result)
             power = x
             result = x
