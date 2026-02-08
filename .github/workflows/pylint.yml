@@ -21,9 +21,9 @@ jobs:
     - name: run pylint on all of the Python code
       run: |
         pylint math10.py
-	    pylint cmath10.py
-	    pylint ssmoke.py
-	    pylint csmoke.py
-	    pylint test_math10.py
-	    pylint test_cmath10.py
+        pylint cmath10.py
+        pylint ssmoke.py
+        pylint csmoke.py
+        pylint test_math10.py
+        pylint test_cmath10.py
 
