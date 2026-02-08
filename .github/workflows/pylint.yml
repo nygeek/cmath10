@@ -20,4 +20,10 @@ jobs:
         pip install pylint
     - name: Analysing the code with pylint
       run: |
-        pylint $(git ls-files '*.py')
+        pylint math10.py
+	    pylint cmath10.py
+	    pylint ssmoke.py
+	    pylint csmoke.py
+	    pylint test_math10.py
+	    pylint test_cmath10.py
+

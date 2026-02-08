@@ -50,6 +50,7 @@ FILES = \
 	mathdata/README.md \
 	mathdata/cmath_testcases.txt \
 	.gitattributes \
+	.github/workflows/pylint.yml \
 	.gitignore \
 	pylintrc \
 	pyproject.toml \
