@@ -1,4 +1,4 @@
-# Unit test suite for math10.py
+""" Unit test suite for math10.py """
 #
 # Mirrors the structure and test data format of CPython's
 # Lib/test/test_math.py
@@ -63,7 +63,7 @@ def result_check(expected, got, rel_tol=REL_TOL, abs_tol=ABS_TOL):
     """
     try:
         exp = Math10(str(expected))
-    except Exception:
+    except (ZeroDivisionError, TypeError, ValueError):
         # non-finite or invalid
         return f"expected {expected!r}, got {got!r} (could not build expected Math10)"
     if exp.is_nan() and got.is_nan():
@@ -83,9 +83,11 @@ class Math10Tests(unittest.TestCase):
 	in math10.
     """
 
+    # pylint: disable=R0913, R0917
     def ftest(self, name, got, expected, rel_tol=REL_TOL, abs_tol=ABS_TOL):
         """Compare got (Math10) vs expected (float) with tolerance."""
-        failure = result_check(expected, got, rel_tol=rel_tol, abs_tol=abs_tol)
+        failure = result_check(expected, got, rel_tol=rel_tol,\
+                abs_tol=abs_tol)
         if failure is not None:
             self.fail(f"{name}: {failure}")
 
@@ -95,6 +97,7 @@ class Math10Tests(unittest.TestCase):
         self.ftest('e', m.e(), 2.718281828459045235360287)
 
     def test_acos(self):
+        """inverse cosine"""
         self.ftest('acos(-1)', m.acos(-1), builtin_math.pi)
         self.ftest('acos(0)', m.acos(0), builtin_math.pi / 2)
         self.ftest('acos(1)', m.acos(1), 0)
@@ -102,12 +105,14 @@ class Math10Tests(unittest.TestCase):
         self.assertRaises(ValueError, m.acos, -1.00001)
 
     def test_acosh(self):
+        """inverse hyperbolic cosine"""
         self.ftest('acosh(1)', m.acosh(1), 0)
         self.ftest('acosh(2)', m.acosh(2), 1.3169578969248168)
         self.assertRaises(ValueError, m.acosh, 0)
         self.assertRaises(ValueError, m.acosh, -1)
 
     def test_asin(self):
+        """inverse sine"""
         self.ftest('asin(-1)', m.asin(-1), -builtin_math.pi / 2)
         self.ftest('asin(0)', m.asin(0), 0)
         self.ftest('asin(1)', m.asin(1), builtin_math.pi / 2)
@@ -115,16 +120,19 @@ class Math10Tests(unittest.TestCase):
         self.assertRaises(ValueError, m.asin, -1.00001)
 
     def test_asinh(self):
+        """inverse hyperbolic sine"""
         self.ftest('asinh(0)', m.asinh(0), 0)
         self.ftest('asinh(1)', m.asinh(1), 0.88137358701954305)
         self.ftest('asinh(-1)', m.asinh(-1), -0.88137358701954305)
 
     def test_atan(self):
+        """inverse tangent"""
         self.ftest('atan(-1)', m.atan(-1), -builtin_math.pi / 4)
         self.ftest('atan(0)', m.atan(0), 0)
         self.ftest('atan(1)', m.atan(1), builtin_math.pi / 4)
 
     def test_atanh(self):
+        """inverse hyperbolic tangent"""
         self.ftest('atanh(0)', m.atanh(0), 0)
         self.ftest('atanh(0.5)', m.atanh(0.5), 0.54930614433405489)
         self.ftest('atanh(-0.5)', m.atanh(-0.5), -0.54930614433405489)
@@ -132,6 +140,7 @@ class Math10Tests(unittest.TestCase):
         self.assertRaises(ValueError, m.atanh, -1)
 
     def test_atan2(self):
+        """inverse tan2"""
         self.ftest('atan2(-1, 0)', m.atan2(-1, 0), -builtin_math.pi / 2)
         self.ftest('atan2(-1, 1)', m.atan2(-1, 1), -builtin_math.pi / 4)
         self.ftest('atan2(0, 1)', m.atan2(0, 1), 0)
@@ -140,28 +149,34 @@ class Math10Tests(unittest.TestCase):
         self.ftest('atan2(1, -1)', m.atan2(1, -1), 3 * builtin_math.pi / 4)
 
     def test_cos(self):
+        """cosine"""
         self.ftest('cos(0)', m.cos(0), 1)
         self.ftest('cos(pi/2)', m.cos(builtin_math.pi / 2), 0, abs_tol=1e-14)
         self.ftest('cos(pi)', m.cos(builtin_math.pi), -1)
 
     def test_sin(self):
+        """sine"""
         self.ftest('sin(0)', m.sin(0), 0)
         self.ftest('sin(pi/2)', m.sin(builtin_math.pi / 2), 1)
         self.ftest('sin(pi)', m.sin(builtin_math.pi), 0, abs_tol=1e-14)
 
     def test_tan(self):
+        """tangent"""
         self.ftest('tan(0)', m.tan(0), 0)
         self.ftest('tan(pi/4)', m.tan(builtin_math.pi / 4), 1)
 
     def test_cosh(self):
+        """hyperbolic cosine"""
         self.ftest('cosh(0)', m.cosh(0), 1)
         self.ftest('cosh(2)-2*cosh(1)**2', m.cosh(2) - 2 * m.cosh(1) ** 2, -1)
 
     def test_sinh(self):
+        """hyperbolic sine"""
         self.ftest('sinh(0)', m.sinh(0), 0)
         self.ftest('sinh(1)', m.sinh(1), 1.1752011936438014)
 
     def test_tanh(self):
+        """hyperbolic tangent"""
         self.ftest('tanh(0)', m.tanh(0), 0)
         self.ftest('tanh(1)', m.tanh(1), 0.76159415595576485)
 
@@ -171,7 +186,8 @@ class Math10Tests(unittest.TestCase):
         skip_flags = {'divide-by-zero', 'overflow', 'invalid'}
         run = 0
         fail = 0
-        for (id_, fn, arg_real, arg_imag, exp_real, exp_imag, flags) in parse_testfile(CMATH_TESTCASES):
+        for (id_, fn, arg_real, arg_imag, exp_real, exp_imag, flags) in\
+                parse_testfile(CMATH_TESTCASES):
             if fn not in MATH10_FUNCTIONS:
                 continue
             if arg_imag != 0.0:  # only real-axis inputs
@@ -179,6 +195,8 @@ class Math10Tests(unittest.TestCase):
             if any(f in flags for f in skip_flags):
                 continue
             if builtin_math.isnan(exp_real) or builtin_math.isinf(exp_real):
+                continue
+            if builtin_math.isnan(exp_imag) or builtin_math.isinf(exp_imag):
                 continue
             run += 1
             try:

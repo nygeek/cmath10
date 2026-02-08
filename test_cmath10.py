@@ -1,16 +1,20 @@
-# Unit test suite for cmath10.py
-#
-# Mirrors the structure and test data format of CPython's Lib/test/test_cmath.py
-# but runs against cmath10 (StdLibAdapter / CMath10) instead of the built-in cmath.
-# Uses mathdata/cmath_testcases.txt; comparison is via CMath10.isclose().
-#
-# SPDX-License-Identifier: MIT
+""" Unit test suite for cmath10.py
+
+Mirrors the structure and test data format of CPython's
+Lib/test/test_cmath.py but runs against cmath10 (StdLibAdapter /
+CMath10) instead of the built-in cmath.
+
+Uses mathdata/cmath_testcases.txt; comparison is via CMath10.isclose().
+
+SPDX-License-Identifier: MIT
+"""
 
 import os
 import unittest
 import math as builtin_math
 
 from cmath10 import CMath10, StdLibAdapter as c
+from math10 import Math10
 
 # Tolerances for complex Decimal vs float expected
 REL_TOL = 1e-12
@@ -30,7 +34,9 @@ SKIP_FLAGS = {'divide-by-zero', 'overflow', 'invalid'}
 
 
 def parse_testfile(fname):
-    """Parse cmath-style test file. Yields (id, fn, arg_real, arg_imag, exp_real, exp_imag, flags)."""
+    """Parse cmath-style test file.
+    Yields (id, fn, arg_real, arg_imag, exp_real, exp_imag, flags).
+    """
     with open(fname, encoding='utf-8') as fp:
         for line in fp:
             if line.startswith('--') or not line.strip():
@@ -62,16 +68,21 @@ def scalar_close(a_float, b_scalar, rel_tol=REL_TOL, abs_tol=ABS_TOL):
             return False
         return (a_float > 0) == (b_scalar > 0)
     try:
-        from math10 import Math10
+        # from math10 import Math10
         exp = Math10(str(a_float))
         return exp.isclose(b_scalar, rel_tol=rel_tol, abs_tol=abs_tol)
-    except Exception:
+    except (ZeroDivisionError, TypeError, ValueError):
         return False
 
 
-def result_check_complex(exp_real, exp_imag, got_z, rel_tol=REL_TOL, abs_tol=ABS_TOL,
-                        ignore_real_sign=False, ignore_imag_sign=False):
-    """Compare expected (exp_real, exp_imag) to got_z (CMath10). Return None if ok, else error str."""
+#  pylint: disable=R0913, R0917
+def result_check_complex(\
+        exp_real, exp_imag, got_z, rel_tol=REL_TOL, abs_tol=ABS_TOL,\
+        ignore_real_sign=False, ignore_imag_sign=False):
+    """
+    Compare expected (exp_real, exp_imag) to got_z (CMath10).
+    Return None if ok, else error str.
+    """
     gr = got_z.real
     gi = got_z.imag
     if ignore_real_sign:
@@ -146,11 +157,15 @@ class CMath10Tests(unittest.TestCase):
                     f"{fn_name}({v}): imag part should be 0"
                 )
 
-    @unittest.skipUnless(os.path.isfile(CMATH_TESTCASES), "mathdata/cmath_testcases.txt not found")
+    @unittest.skipUnless(os.path.isfile(CMATH_TESTCASES),\
+            "mathdata/cmath_testcases.txt not found")
+    # pylint: disable=R0913, R0917
     def test_specific_values(self):
+        # pylint: disable=R0914
         """Run cases from cmath_testcases.txt for cmath10 functions."""
         run = 0
-        for (id_, fn, ar, ai, er, ei, flags) in parse_testfile(CMATH_TESTCASES):
+        for (id_, fn, ar, ai, er, ei, flags) in\
+                parse_testfile(CMATH_TESTCASES):
             if fn not in CMATH10_FUNCTIONS:
                 continue
             if any(f in flags for f in SKIP_FLAGS):
