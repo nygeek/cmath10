@@ -1,5 +1,10 @@
--- Subset of CPython cmath_testcases.txt for math10 (real-axis cases only).
--- Full file: https://raw.githubusercontent.com/python/cpython/main/Lib/test/mathdata/cmath_testcases.txt
+-- Subset of CPython cmath_testcases.txt for math10 (real-axis cases
+-- only).
+
+-- Full path:
+-- https://github.com/python/cpython/tree/main/Lib/test/mathdata
+--     cmath_testcases.txt
+
 -- Format: id fn arg_real arg_imag -> exp_real exp_imag [flags]
 
 -- acos: real inputs

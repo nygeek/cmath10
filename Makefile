@@ -47,6 +47,8 @@ FILES = \
 	${PYTHON_CODE} \
 	LICENSE \
 	Makefile \
+	mathdata/README.md \
+	mathdata/cmath_testcases.txt \
 	.gitattributes \
 	.gitignore \
 	pylintrc \
