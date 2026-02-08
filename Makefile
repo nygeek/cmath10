@@ -58,10 +58,14 @@ FILES = \
 
 .PHONY: lint pylint
 lint:
-	pylint ${PYTHON_CODE}
+	pylint math10.py
+	pylint cmath10.py
+	pylint ssmoke.py
+	pylint csmoke.py
+	pylint test_math10.py
+	pylint test_cmath10.py
 
-pylint:
-	pylint ${PYTHON_CODE}
+pylint: lint
 
 .PHONY: test
 test:
