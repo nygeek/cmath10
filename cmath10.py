@@ -200,6 +200,37 @@ class CMath10:
             return self.__class__(result)
 
 
+    def asinh(self):
+        """ inverse hyperbolic sine: asinh(z) = log(z + sqrt(z² + 1)) """
+        with localcontext() as ctx:
+            ctx.prec += 2
+            one = self.__class__(1, 0)
+            zz_plus_one = self.mul(self).add(one)
+            result = self.add(zz_plus_one.sqrt()).log()
+            return self.__class__(result)
+
+
+    def acosh(self):
+        """ inverse hyperbolic cosine: acosh(z) = log(z + sqrt(z² - 1)) """
+        with localcontext() as ctx:
+            ctx.prec += 2
+            one = self.__class__(1, 0)
+            zz_minus_one = self.mul(self).sub(one)
+            result = self.add(zz_minus_one.sqrt()).log()
+            return self.__class__(result)
+
+
+    def atanh(self):
+        """ inverse hyperbolic tangent: atanh(z) = (1/2) * log((1+z)/(1-z))
+        """
+        with localcontext() as ctx:
+            ctx.prec += 2
+            one = self.__class__(1, 0)
+            two = self.__class__(2, 0)
+            result = one.add(self).div(one.sub(self)).log().div(two)
+            return self.__class__(result)
+
+
     def exp(self):
         """ exp(a+bi) = exp(a)*(cos(b)+isin(b)) """
         with localcontext() as ctx:
@@ -240,8 +271,12 @@ class CMath10:
             ctx.prec += 2
             r = self.scalar_abs()
             sign = 1 if self.imag >= 0 else -1
-            result = self.__class__(((r + self.real)/2).sqrt(), \
-                      sign * ((r - self.real)/2).sqrt())
+            re_part = (r + self.real) / 2
+            im_radicand = (r - self.real) / 2
+            # Clamp to 0 to avoid InvalidOperation when im_radicand is tiny negative (rounding)
+            if im_radicand < 0:
+                im_radicand = self.Scalar(0)
+            result = self.__class__(re_part.sqrt(), sign * im_radicand.sqrt())
             return result
 
 
@@ -257,13 +292,13 @@ class CMath10:
 
 
     def cosh(self):
-        """ complex hyperbolic cosine """
+        """ complex hyperbolic cosine: cosh(re + i*im) = cosh(re)cos(im) + i*sinh(re)sin(im) """
         with localcontext() as ctx:
             ctx.prec += 2
             re = self.real
             im = self.imag
-            real = self.Scalar.sinh(re) * self.Scalar.cos(im)
-            imag = self.Scalar.cosh(re) * self.Scalar.sin(im)
+            real = self.Scalar(re).cosh() * self.Scalar(im).cos()
+            imag = self.Scalar(re).sinh() * self.Scalar(im).sin()
             return self.__class__(real, imag)
 
 
@@ -279,13 +314,13 @@ class CMath10:
 
 
     def sinh(self):
-        """ complex hyperbolic sine """
+        """ complex hyperbolic sine: sinh(re + i*im) = sinh(re)cos(im) + i*cosh(re)sin(im) """
         with localcontext() as ctx:
             ctx.prec += 2
             re = self.real
             im = self.imag
-            real = self.Scalar.cosh(re) * self.Scalar.cos(im)
-            imag = self.Scalar.sinh(re) * self.Scalar.sin(im)
+            real = self.Scalar(re).sinh() * self.Scalar(im).cos()
+            imag = self.Scalar(re).cosh() * self.Scalar(im).sin()
             return self.__class__(real, imag)
 
 

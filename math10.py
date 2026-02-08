@@ -172,18 +172,15 @@ class Math10(Decimal):
                         - self.__class__(1/x).atan()
                 return self.__class__(+result)
 
-            # For values close to 1, use atan(x) =
-            #   pi/4 + atan((x-1)/(x+1)) to improve convergence
+            # For values close to ±1, use atan(x) =
+            #   pi/4 + atan((x-1)/(x+1)) to improve convergence (holds for all x here)
             if abs(x) > Decimal('0.5'):
                 pi_4 = self.__class__.pi() / 4
                 if x == self.__class__(1):
                     return pi_4
                 if x == self.__class__(-1):
                     return -pi_4
-                if x > 0:
-                    result = pi_4 + self.__class__((x-1)/(x+1)).atan()
-                else:
-                    result = -pi_4 + self.__class__((x-1)/(x+1)).atan()
+                result = pi_4 + self.__class__((x-1)/(x+1)).atan()
                 return self.__class__(+result)
 
             power = x

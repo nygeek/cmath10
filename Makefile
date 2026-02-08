@@ -39,7 +39,9 @@ PYTHON_CODE = \
 	cmath10.py \
 	csmoke.py \
 	math10.py \
-	ssmoke.py
+	ssmoke.py \
+	test_math10.py \
+	test_cmath10.py
 
 FILES = \
 	${PYTHON_CODE} \
