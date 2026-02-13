@@ -88,8 +88,12 @@ Makefile.ps: Makefile
 listings: \
 	Makefile.pdf \
 	cmath10.pdf \
-	math10.pdf 
-
+	csmoke.pdf \
+	math10.pdf \
+	ssmoke.pdf \
+	test_cmath10.pdf \
+	test_math10.pdf 
+	mv *.pdf ~/tmp
 
 .PHONY: clean
 
